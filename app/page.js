@@ -539,41 +539,6 @@ const DancerOnDholak = ({ className = "w-28 h-32", onBeatClick }) => (
   </motion.div>
 );
 
-/* TRADITIONAL SWAGAT AARTI THALI (FAMILY & BLESSINGS ANIMATION) */
-const SwagatAartiThali = ({ className = "w-16 h-16" }) => (
-  <motion.div 
-    className={`relative inline-block ${className}`}
-    animate={{ rotate: [0, 360] }}
-    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-  >
-    <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-md" fill="none">
-      {/* Ornate Brass Plate Rim */}
-      <circle cx="50" cy="50" r="46" fill="#FDE68A" stroke="#B45309" strokeWidth="2.5" />
-      <circle cx="50" cy="50" r="41" fill="#FEF3C7" stroke="#DC2626" strokeWidth="1.5" strokeDasharray="3 3" />
-      <circle cx="50" cy="50" r="36" fill="#FFFBEB" stroke="#D97706" strokeWidth="1" />
-      
-      {/* Auspicious Kumkum & Haldi Katoris */}
-      <circle cx="36" cy="36" r="8" fill="#DC2626" stroke="#991B1B" strokeWidth="1" />
-      <circle cx="36" cy="36" r="5" fill="#EF4444" />
-      <circle cx="64" cy="36" r="8" fill="#F59E0B" stroke="#B45309" strokeWidth="1" />
-      <circle cx="64" cy="36" r="5" fill="#FBBF24" />
-
-      {/* Rose & Marigold Garland Ring inside Plate */}
-      <circle cx="50" cy="50" r="24" stroke="#059669" strokeWidth="2" strokeDasharray="4 4" />
-      <circle cx="50" cy="74" r="5" fill="#E11D48" />
-      <circle cx="38" cy="70" r="4" fill="#F59E0B" />
-      <circle cx="62" cy="70" r="4" fill="#F59E0B" />
-
-      {/* Center Brass Diya (Lamp of Welcoming) */}
-      <ellipse cx="50" cy="53" rx="9" ry="6" fill="#D97706" stroke="#92400E" strokeWidth="1.2" />
-      {/* Diya Flame */}
-      <path d="M50 48 C46 44 47 38 50 32 C53 38 54 44 50 48 Z" fill="#F59E0B" />
-      <path d="M50 47 C48 44 48 40 50 36 C52 40 52 44 50 47 Z" fill="#FEF08A" />
-      <circle cx="50" cy="34" r="1.5" fill="#EF4444" />
-    </svg>
-  </motion.div>
-);
-
 const CELEBRATIONS = [
   {
     date: "November 26, 2026",
@@ -1137,62 +1102,6 @@ export default function WeddingInvite() {
             From mutual smiles and unending late-night conversations to realizing that every tomorrow is sweeter together. 
             Surrounded by the warmth of our beloved family and dearest friends, we are thrilled to step into our forever 
             and begin this blessed new chapter.
-          </p>
-        </motion.div>
-      </section>
-
-      {/* TRADITIONAL FAMILY BLESSINGS & ROYAL SWAGAT AARTI SECTION */}
-      <section className="py-20 bg-[#FAF1DF]/90 border-y border-amber-300/60 relative overflow-hidden">
-        <RoyalCorner position="top-left" />
-        <RoyalCorner position="top-right" />
-        <RoyalCorner position="bottom-left" />
-        <RoyalCorner position="bottom-right" />
-
-        <motion.div 
-          initial="hidden" 
-          whileInView="visible" 
-          viewport={{ once: true }} 
-          variants={fadeInUp} 
-          className="max-w-4xl mx-auto px-6 text-center space-y-6"
-        >
-          <div className="flex items-center justify-center gap-4">
-            <SwagatAartiThali className="w-16 h-16 sm:w-20 sm:h-20" />
-          </div>
-
-          <span className="text-xs font-sans tracking-[0.3em] text-[#831828] uppercase font-bold block">
-            ॥ स्वागताय मधुरं मिलनम् • सपरिवार आशीर्वाद ॥
-          </span>
-
-          <h3 className="text-2xl sm:text-4xl font-serif font-light text-stone-800">
-            Royal Family Swagat &amp; Warm Welcome
-          </h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 text-left">
-            <div className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-shadow">
-              <span className="text-2xl block">💐</span>
-              <h4 className="font-serif text-base text-stone-800 font-semibold">Milni &amp; Toran Swagat</h4>
-              <p className="font-sans text-xs text-stone-600 leading-relaxed">
-                Warm traditional welcoming of Baraatis and dear guests with fragrant rose water, marigold garlands, and ittar.
-              </p>
-            </div>
-            <div className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-shadow">
-              <span className="text-2xl block">🪔</span>
-              <h4 className="font-serif text-base text-stone-800 font-semibold">Aarti &amp; Tilak</h4>
-              <p className="font-sans text-xs text-stone-600 leading-relaxed">
-                Auspicious Vedic blessings by mothers, aunts, and elders welcoming groom and bride to the sacred mandap.
-              </p>
-            </div>
-            <div className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-shadow">
-              <span className="text-2xl block">🥁</span>
-              <h4 className="font-serif text-base text-stone-800 font-semibold">Dhol Tasha &amp; Nagada Dance</h4>
-              <p className="font-sans text-xs text-stone-600 leading-relaxed">
-                Festive high-energy beats by folk artists bringing families and friends together on the dance floor.
-              </p>
-            </div>
-          </div>
-
-          <p className="font-serif italic text-sm text-amber-900 max-w-xl mx-auto pt-2">
-            &ldquo;Atithi Devo Bhava — In Rajasthan, every guest is family. We welcome you with open arms and joyful hearts.&rdquo;
           </p>
         </motion.div>
       </section>
