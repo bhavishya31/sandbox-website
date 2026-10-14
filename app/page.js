@@ -956,26 +956,6 @@ export default function WeddingInvite() {
         </div>
       )}
 
-      {/* FLOATING DHOL BEAT / MUSIC CONTROLLER WIDGET */}
-      {isMounted && isInvitationOpened && (
-        <div className="fixed bottom-5 left-5 sm:bottom-7 sm:left-7 z-40">
-          <div 
-            onClick={triggerDholBurst}
-            className="cursor-pointer group relative flex items-center gap-2 bg-gradient-to-r from-[#831828] to-[#991B1B] text-amber-100 px-3.5 py-2.5 rounded-full shadow-2xl border-2 border-amber-300 hover:scale-105 active:scale-95 transition-all select-none"
-            title="Tap for Live Dhol Tasha beat celebration!"
-          >
-            <span className="text-lg animate-pulse">🥁</span>
-            <span className="text-[11px] font-sans font-bold tracking-widest uppercase hidden sm:inline-block">
-              Tap Dhol Tasha
-            </span>
-            <Music size={13} className="text-amber-300" />
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
-            </span>
-          </div>
-        </div>
-      )}
 
       {/* FLOATING ACTION BUTTONS */}
       <div className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-50 flex flex-col items-end gap-2 sm:gap-3">
@@ -1202,20 +1182,11 @@ export default function WeddingInvite() {
                 Auspicious Vedic blessings by mothers, aunts, and elders welcoming groom and bride to the sacred mandap.
               </p>
             </div>
-            <div 
-              onClick={triggerDholBurst}
-              className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-all cursor-pointer group hover:border-amber-400"
-              title="Tap to join the dance and play dhol beats!"
-            >
-              <div className="flex justify-center -mt-1 mb-1">
-                <DancerOnDholak className="w-24 h-28 group-hover:scale-105 transition-transform" onBeatClick={triggerDholBurst} />
-              </div>
-              <h4 className="font-serif text-base text-stone-800 font-semibold flex items-center justify-center gap-1.5">
-                Dhol Tasha &amp; Nagada Dance
-                <Sparkles size={14} className="text-amber-500 animate-pulse" />
-              </h4>
+            <div className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-shadow">
+              <span className="text-2xl block">🥁</span>
+              <h4 className="font-serif text-base text-stone-800 font-semibold">Dhol Tasha &amp; Nagada Dance</h4>
               <p className="font-sans text-xs text-stone-600 leading-relaxed">
-                Festive high-energy beats by folk artists bringing families and friends together on the dance floor. <span className="text-[#831828] font-semibold block mt-1">Tap to dance along! 🥁</span>
+                Festive high-energy beats by folk artists bringing families and friends together on the dance floor.
               </p>
             </div>
           </div>
