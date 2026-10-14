@@ -94,110 +94,126 @@ const LordGaneshaLogo = ({ className = "w-14 h-14" }) => (
   </svg>
 );
 
-/* ROYAL BRIDE & GROOM EMBLEM LOGO (PERFECTLY ALIGNED & ANIMATED) */
-const BrideGroomLogo = ({ className = "w-36 h-36" }) => (
+/* ROYAL BRIDE & GROOM EMBLEM LOGO (PERFECTLY FITTED & ANIMATED) */
+const BrideGroomLogo = ({ className = "w-40 h-40 sm:w-48 sm:h-48" }) => (
   <motion.div 
     className={`relative inline-flex items-center justify-center select-none ${className}`}
     animate={{ y: [0, -4, 0] }}
-    transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
     whileHover={{ scale: 1.06 }}
   >
-    <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-md overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 120 120" className="w-full h-full drop-shadow-lg overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
       {/* Outer Golden Aura Backdrop */}
-      <circle cx="50" cy="50" r="47" fill="#FFFDF7" stroke="#F59E0B" strokeWidth="1.2" />
+      <circle cx="60" cy="60" r="57" fill="#FFFDF8" stroke="#D97706" strokeWidth="1.8" />
       
       {/* Rotating Auspicious Dashed Ring */}
       <motion.circle 
-        cx="50" cy="50" r="43" 
-        stroke="#D97706" 
-        strokeWidth="1.2" 
+        cx="60" cy="60" r="52" 
+        stroke="#F59E0B" 
+        strokeWidth="1.5" 
         strokeDasharray="4 4"
-        opacity="0.65"
+        opacity="0.8"
         animate={{ rotate: 360 }}
-        transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-        style={{ transformOrigin: "50px 50px" }}
+        transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
+        style={{ transformOrigin: "60px 60px" }}
       />
-      <circle cx="50" cy="50" r="39" fill="#FEF3C7" opacity="0.35" />
+      <circle cx="60" cy="60" r="47" fill="#FEF3C7" opacity="0.4" />
+      <circle cx="60" cy="60" r="46" stroke="#DC2626" strokeWidth="0.8" opacity="0.3" />
+
+      {/* Lotus Pedestal Base (anchors the couple gracefully at bottom) */}
+      <path d="M 26 95 C 38 108 82 108 94 95 C 84 91 60 92 26 95 Z" fill="#991B1B" stroke="#78350F" strokeWidth="1" />
+      <path d="M 32 94 Q 60 102 88 94" stroke="#FDE047" strokeWidth="1.6" fill="none" />
+      <circle cx="60" cy="98" r="2.2" fill="#F59E0B" />
+      <circle cx="48" cy="97" r="1.5" fill="#FEF08A" />
+      <circle cx="72" cy="97" r="1.5" fill="#FEF08A" />
       
       {/* Floating Sparkles & Blessings */}
       <motion.g
         animate={{ opacity: [0.4, 0.9, 0.4], scale: [0.95, 1.05, 0.95] }}
         transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "50px 50px" }}
+        style={{ transformOrigin: "60px 60px" }}
       >
-        <circle cx="20" cy="24" r="1.5" fill="#F59E0B" />
-        <circle cx="80" cy="24" r="1.5" fill="#F59E0B" />
-        <circle cx="50" cy="14" r="2" fill="#DC2626" />
+        <circle cx="24" cy="28" r="1.8" fill="#F59E0B" />
+        <circle cx="96" cy="28" r="1.8" fill="#F59E0B" />
+        <circle cx="60" cy="16" r="2" fill="#DC2626" />
       </motion.g>
 
       {/* Groom (Left): Royal Safa, Kalgi, Sherwani & Tilak */}
       <motion.g 
-        animate={{ rotate: [0, 1.8, 0], x: [0, 0.5, 0] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "32px 64px" }}
+        animate={{ rotate: [0, 1.4, 0], x: [0, 0.4, 0] }}
+        transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "42px 76px" }}
       >
         {/* Royal Safa / Turban */}
-        <path d="M20 32 C19 22 26 16 34 16 C42 16 46 22 44 32 Z" fill="#991B1B" stroke="#7F1D1D" strokeWidth="1" />
-        <path d="M22 26 Q32 20 42 27" stroke="#F59E0B" strokeWidth="1.5" fill="none" />
-        <path d="M20 28 Q32 34 44 28" stroke="#DC2626" strokeWidth="1.2" fill="none" />
+        <path d="M 28 38 C 27 25 35 18 45 18 C 55 18 60 25 58 38 Z" fill="#991B1B" stroke="#7F1D1D" strokeWidth="1.2" />
+        <path d="M 30 31 Q 43 23 56 31" stroke="#F59E0B" strokeWidth="1.8" fill="none" />
+        <path d="M 28 35 Q 43 41 58 34" stroke="#DC2626" strokeWidth="1.2" fill="none" />
+        <path d="M 28 34 C 23 40 23 52 26 58" stroke="#991B1B" strokeWidth="2.5" strokeLinecap="round" fill="none" />
         {/* Kalgi / Feather Brooch */}
-        <path d="M32 16 L33 9 L36 14 Z" fill="#10B981" />
-        <circle cx="33" cy="16" r="2.2" fill="#FBBF24" stroke="#DC2626" strokeWidth="0.8" />
+        <path d="M 43 18 L 44 9 L 48 15 Z" fill="#059669" />
+        <circle cx="44" cy="18" r="2.8" fill="#FBBF24" stroke="#DC2626" strokeWidth="1" />
         {/* Groom Face & Tilak */}
-        <circle cx="33" cy="38" r="6.8" fill="#FDE68A" stroke="#B45309" strokeWidth="0.8" />
-        <line x1="33" y1="34" x2="33" y2="38" stroke="#DC2626" strokeWidth="1.4" strokeLinecap="round" />
-        <circle cx="33" cy="39" r="0.8" fill="#F59E0B" />
+        <circle cx="43" cy="46" r="8.2" fill="#FDE68A" stroke="#B45309" strokeWidth="0.9" />
+        <line x1="43" y1="41" x2="43" y2="46" stroke="#DC2626" strokeWidth="1.6" strokeLinecap="round" />
+        <circle cx="43" cy="48" r="1" fill="#F59E0B" />
+        <path d="M 39 50 Q 43 52 47 50" stroke="#78350F" strokeWidth="1" strokeLinecap="round" fill="none" />
         {/* Sherwani Torso & Golden Shawl */}
-        <path d="M21 58 C21 46 26 44 33 44 C40 44 45 46 45 58 Z" fill="#78350F" stroke="#451A03" strokeWidth="1" />
-        <path d="M33 44 L33 58" stroke="#FBBF24" strokeWidth="1.6" />
-        <path d="M26 48 Q33 55 40 48" stroke="#FEF08A" strokeWidth="1.2" strokeDasharray="2 2" fill="none" />
+        <path d="M 28 70 C 28 55 35 54 44 54 C 53 54 58 55 58 70 L 56 94 C 48 95 38 95 30 94 Z" fill="#78350F" stroke="#451A03" strokeWidth="1.2" />
+        <path d="M 44 54 L 44 94" stroke="#FBBF24" strokeWidth="2" />
+        <path d="M 34 60 Q 44 68 54 60" stroke="#FEF3C7" strokeWidth="1.6" strokeDasharray="2 2" fill="none" />
+        <path d="M 28 66 C 26 76 27 88 29 95" stroke="#F59E0B" strokeWidth="3" strokeLinecap="round" fill="none" />
       </motion.g>
 
-      {/* Bride (Right): Chunri, Maang Tikka, Nath & Lehanga */}
+      {/* Bride (Right): Chunri, Maang Tikka, Nath & Lehenga */}
       <motion.g 
-        animate={{ rotate: [0, -1.8, 0], x: [0, -0.5, 0] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "68px 64px" }}
+        animate={{ rotate: [0, -1.4, 0], x: [0, -0.4, 0] }}
+        transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "78px 76px" }}
       >
         {/* Bridal Chunri / Veil */}
-        <path d="M54 58 C53 38 58 18 68 18 C78 18 83 38 82 58 Z" fill="#B91C1C" stroke="#881337" strokeWidth="1" />
-        <path d="M57 58 C57 32 61 22 68 22 C75 22 79 32 79 58" stroke="#F59E0B" strokeWidth="1.2" strokeDasharray="2 2" fill="none" />
+        <path d="M 64 70 C 63 46 68 21 80 21 C 92 21 98 46 97 70 L 95 94 C 86 95 76 95 66 94 Z" fill="#B91C1C" stroke="#881337" strokeWidth="1.2" />
+        <path d="M 67 70 C 67 38 72 26 80 26 C 88 26 93 38 93 70" stroke="#F59E0B" strokeWidth="1.5" strokeDasharray="2.5 2.5" fill="none" />
+        <path d="M 64 94 C 62 82 62 60 65 44" stroke="#FBBF24" strokeWidth="1.5" strokeLinecap="round" fill="none" />
         {/* Bride Face */}
-        <circle cx="68" cy="38" r="6.8" fill="#FDE68A" stroke="#B45309" strokeWidth="0.8" />
+        <circle cx="80" cy="46" r="8.2" fill="#FDE68A" stroke="#B45309" strokeWidth="0.9" />
         {/* Sparkling Maang Tikka */}
-        <line x1="68" y1="27" x2="68" y2="34" stroke="#F59E0B" strokeWidth="1.2" />
+        <line x1="80" y1="32" x2="80" y2="42" stroke="#F59E0B" strokeWidth="1.4" />
         <motion.circle 
-          cx="68" cy="34" r="1.6" fill="#DC2626" 
+          cx="80" cy="42" r="2" fill="#DC2626" 
           animate={{ scale: [1, 1.4, 1] }} 
           transition={{ duration: 1.6, repeat: Infinity }} 
         />
+        {/* Bridal Nath (Nose Ring) */}
+        <circle cx="76" cy="48" r="1.8" stroke="#F59E0B" strokeWidth="0.8" fill="none" />
         {/* Royal Lehenga Bodice */}
-        <path d="M58 58 C58 46 62 44 68 44 C74 44 78 46 78 58 Z" fill="#991B1B" />
-        <path d="M62 47 Q68 53 74 47" stroke="#FBBF24" strokeWidth="1.4" fill="none" />
+        <path d="M 68 70 C 68 56 73 54 80 54 C 87 54 92 56 92 70 L 90 94 C 84 95 76 95 70 94 Z" fill="#991B1B" />
+        <path d="M 72 58 Q 80 65 88 58" stroke="#FBBF24" strokeWidth="1.8" fill="none" />
+        <path d="M 73 64 Q 80 71 87 64" stroke="#FEF08A" strokeWidth="1.2" strokeDasharray="1.5 1.5" fill="none" />
       </motion.g>
 
       {/* Auspicious Varmala Garland with Heart Glow */}
       <motion.path 
-        d="M32 50 Q50 63 68 50" 
-        stroke="#10B981" 
-        strokeWidth="2.8" 
+        d="M 42 62 Q 60 78 80 62" 
+        stroke="#059669" 
+        strokeWidth="3.2" 
         fill="none" 
         strokeLinecap="round" 
-        animate={{ strokeWidth: [2.8, 3.4, 2.8] }}
+        animate={{ strokeWidth: [3.2, 4, 3.2] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       />
-      <circle cx="39" cy="54" r="2.5" fill="#EF4444" />
-      <circle cx="45" cy="56" r="2.2" fill="#F59E0B" />
-      <circle cx="55" cy="56" r="2.2" fill="#F59E0B" />
-      <circle cx="61" cy="54" r="2.5" fill="#EF4444" />
+      <circle cx="49" cy="67" r="3" fill="#EF4444" />
+      <circle cx="56" cy="70" r="2.8" fill="#F59E0B" />
+      <circle cx="66" cy="70" r="2.8" fill="#F59E0B" />
+      <circle cx="73" cy="67" r="3" fill="#EF4444" />
 
       {/* Sacred Heart in Center */}
       <motion.g
-        animate={{ scale: [1, 1.22, 1] }}
+        animate={{ scale: [1, 1.25, 1] }}
         transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "50px 53px" }}
+        style={{ transformOrigin: "61px 66px" }}
       >
-        <circle cx="50" cy="53" r="3.2" fill="#DC2626" stroke="#FEF08A" strokeWidth="0.8" />
+        <circle cx="61" cy="66" r="4.2" fill="#DC2626" stroke="#FEF08A" strokeWidth="1" />
+        <circle cx="61" cy="66" r="2" fill="#FDE047" />
       </motion.g>
     </svg>
   </motion.div>
@@ -350,87 +366,95 @@ const RoyalCorner = ({ position = "top-left" }) => {
   );
 };
 
-/* CEREMONY LOGO ICONS (UPGRADED WITH RICH ARTWORK & FRAMER-MOTION ANIMATIONS) */
+/* CEREMONY LOGO ICONS (UPGRADED AUTHENTIC ARTWORK & ANIMATIONS) */
 const GaneshPujaIcon = () => (
   <motion.div 
-    className="w-14 h-14 relative flex items-center justify-center select-none"
+    className="w-full h-full relative flex items-center justify-center select-none"
     animate={{ y: [0, -2, 0] }}
     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
   >
     <svg viewBox="0 0 64 64" className="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Sacred Kalash Base */}
-      <ellipse cx="32" cy="53" rx="14" ry="3" fill="#B45309" opacity="0.25" />
-      <path d="M20 34 C16 40 18 50 32 50 C46 50 48 40 44 34 Z" fill="#F59E0B" stroke="#B45309" strokeWidth="1.6" />
-      <ellipse cx="32" cy="34" rx="12" ry="3.5" fill="#FEF3C7" stroke="#B45309" strokeWidth="1.4" />
+      {/* Radiant Sunburst Aura */}
+      <circle cx="32" cy="32" r="29" stroke="#F59E0B" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
       
-      {/* Sacred Shrifal / Coconut */}
-      <path d="M32 20 C27 25 27 34 32 34 C37 34 37 25 32 20 Z" fill="#78350F" stroke="#451A03" strokeWidth="1.2" />
+      {/* Auspicious Mukut / Golden Crown */}
+      <path d="M25 18 L32 7 L39 18 L36 22 L28 22 Z" fill="#F59E0B" stroke="#B45309" strokeWidth="1.2" />
+      <circle cx="32" cy="13" r="1.8" fill="#DC2626" />
       
-      {/* Auspicious Mango Leaves with gentle breath */}
-      <motion.g
-        animate={{ scale: [1, 1.05, 1] }}
-        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "32px 34px" }}
-      >
-        <path d="M23 34 C17 30 17 23 21 19 C24 23 26 28 27 33 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
-        <path d="M41 34 C47 30 47 23 43 19 C40 23 38 28 37 33 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
-      </motion.g>
+      {/* Lord Ganesha Ears */}
+      <path d="M21 24 C14 22 10 30 14 38 C18 41 21 38 22 34" fill="#FDE68A" stroke="#B45309" strokeWidth="1.3" />
+      <path d="M43 24 C50 22 54 30 50 38 C46 41 43 38 42 34" fill="#FDE68A" stroke="#B45309" strokeWidth="1.3" />
+      
+      {/* Divine Mastak & Face */}
+      <path d="M21 23 C25 20 39 20 43 23 C46 30 43 34 39 36 C37 34 27 34 25 36 C21 34 18 30 21 23 Z" fill="#FEF3C7" stroke="#B45309" strokeWidth="1.3" />
+      {/* Red Tilak with Golden Bindi */}
+      <line x1="32" y1="20" x2="32" y2="29" stroke="#DC2626" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M28 23 Q32 27 36 23" stroke="#DC2626" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+      <circle cx="32" cy="28" r="1.3" fill="#F59E0B" />
+      
+      {/* Vakra-tunda / Curved Trunk holding Modak */}
+      <path d="M29 35 C29 43 30 51 37 53 C41 54 44 51 43 47 C42 44 38 45 37 47" stroke="#B45309" strokeWidth="2.8" strokeLinecap="round" fill="none" />
+      {/* Golden Modak */}
+      <ellipse cx="44" cy="46" rx="3.5" ry="3.5" fill="#F59E0B" stroke="#B45309" strokeWidth="0.8" />
 
-      {/* Holy Tilak Swastika Accents on Kalash */}
-      <circle cx="32" cy="42" r="2.5" fill="#DC2626" />
-      <circle cx="26" cy="42" r="1.5" fill="#FDE047" />
-      <circle cx="38" cy="42" r="1.5" fill="#FDE047" />
-
-      {/* Divine Flickering Diya Flame */}
+      {/* Divine Flickering Diya at the Base */}
       <motion.g
-        animate={{ scale: [1, 1.15, 0.95, 1.1, 1], y: [0, -1.5, 0.5, -1, 0] }}
+        animate={{ scale: [1, 1.15, 0.95, 1.1, 1], y: [0, -1, 0.5, -0.8, 0] }}
         transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "32px 12px" }}
+        style={{ transformOrigin: "18px 48px" }}
       >
-        <path d="M32 6 C32 6 28 12 28 16 C28 18.5 29.8 20.5 32 20.5 C34.2 20.5 36 18.5 36 16 C36 12 32 6 32 6 Z" fill="#EF4444" />
-        <path d="M32 10 C32 10 30 13 30 16 C30 17.5 30.8 18.5 32 18.5 C33.2 18.5 34 17.5 34 16 C34 13 32 10 32 10 Z" fill="#FBBF24" />
-        <circle cx="32" cy="15" r="1" fill="#FFFFFF" />
+        <path d="M18 45 C18 45 15 49 15 52 C15 54 16.5 55 18 55 C19.5 55 21 54 21 52 C21 49 18 45 18 45 Z" fill="#EF4444" />
+        <path d="M18 48 C18 48 16.5 50 16.5 52 C16.5 53 17.2 53.8 18 53.8 C18.8 53.8 19.5 53 19.5 52 C19.5 50 18 48 18 48 Z" fill="#FBBF24" />
       </motion.g>
     </svg>
   </motion.div>
 );
 
 const MehendiIcon = () => (
-  <div className="w-14 h-14 relative flex items-center justify-center select-none">
-    {/* Outer rotating dashed mandala ring */}
+  <div className="w-full h-full relative flex items-center justify-center select-none">
+    {/* Rotating Henna Mandala Halo */}
     <motion.svg
       viewBox="0 0 64 64"
       className="w-full h-full absolute inset-0"
       fill="none"
       animate={{ rotate: 360 }}
-      transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+      transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
     >
       <circle cx="32" cy="32" r="28" stroke="#059669" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.85" />
       <circle cx="32" cy="32" r="24" stroke="#10B981" strokeWidth="1" opacity="0.4" />
     </motion.svg>
-    {/* Blooming Henna Flower / Mandala */}
-    <motion.svg
-      viewBox="0 0 64 64"
-      className="w-full h-full"
-      fill="none"
-      animate={{ rotate: [-360, 0] }}
-      transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-    >
-      <circle cx="32" cy="32" r="7" fill="#047857" />
-      <circle cx="32" cy="32" r="3" fill="#A7F3D0" />
-      {MEHENDI_ANGLES.map((angle, i) => (
-        <g key={i} transform={`rotate(${angle} 32 32)`}>
-          <path d="M32 12 C28 18 28 24 32 26 C36 24 36 18 32 12 Z" fill="#6EE7B7" stroke="#059669" strokeWidth="1.2" />
-          <circle cx="32" cy="9" r="1.5" fill="#047857" />
-        </g>
-      ))}
-    </motion.svg>
+
+    {/* Decorated Bridal Palm & Henna Cone */}
+    <svg viewBox="0 0 64 64" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Palm Silhouette */}
+      <path d="M22 52 C20 46 20 38 24 34 C25 28 28 22 30 22 C32 22 33 26 34 30 C36 24 38 20 40 20 C42 20 43 24 43 29 C45 24 47 22 49 22 C51 22 51 27 50 33 C52 35 53 38 52 44 C50 51 44 54 36 54 C28 54 24 53 22 52 Z" fill="#FEF3C7" stroke="#047857" strokeWidth="1.4" />
+      
+      {/* Intricate Henna Flower in Palm Center */}
+      <circle cx="36" cy="40" r="5" fill="#059669" />
+      <circle cx="36" cy="40" r="2" fill="#FEF08A" />
+      <circle cx="36" cy="33" r="1.2" fill="#047857" />
+      <circle cx="36" cy="47" r="1.2" fill="#047857" />
+      <circle cx="29" cy="40" r="1.2" fill="#047857" />
+      <circle cx="43" cy="40" r="1.2" fill="#047857" />
+      
+      {/* Henna-dipped fingertips */}
+      <path d="M29 22 Q30 25 31 22 Z" fill="#047857" />
+      <path d="M39 20 Q40 23 41 20 Z" fill="#047857" />
+      <path d="M48 22 Q49 25 50 22 Z" fill="#047857" />
+
+      {/* Traditional Henna Cone Dispensing Shimmer */}
+      <g transform="translate(4, -2)">
+        <path d="M12 12 L24 28 L27 26 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
+        <path d="M12 12 L18 10 L27 26 Z" fill="#10B981" />
+        <circle cx="25" cy="29" r="1.5" fill="#F59E0B" />
+      </g>
+    </svg>
   </div>
 );
 
 const HaldiIcon = () => (
   <motion.div
-    className="w-14 h-14 relative flex items-center justify-center select-none"
+    className="w-full h-full relative flex items-center justify-center select-none"
     animate={{ scale: [1, 1.04, 1] }}
     transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
   >
@@ -479,7 +503,7 @@ const HaldiIcon = () => (
 
 const SangeetIcon = () => (
   <motion.div 
-    className="w-14 h-14 relative flex items-center justify-center select-none"
+    className="w-full h-full relative flex items-center justify-center select-none"
     animate={{ y: [0, -3, 0] }}
     transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
   >
@@ -525,7 +549,7 @@ const SangeetIcon = () => (
 /* CHAAK CEREMONY ICON (Traditional Terracotta Matka & Mangal Kalash) */
 const ChaakIcon = () => (
   <motion.div
-    className="w-14 h-14 relative flex items-center justify-center select-none"
+    className="w-full h-full relative flex items-center justify-center select-none"
     animate={{ rotate: [-2.5, 2.5, -2.5] }}
     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
   >
@@ -567,7 +591,7 @@ const ChaakIcon = () => (
 
 /* CARNIVAL DANCE CELEBRATION ICON (DANDIYA & CELEBRATION PINWHEEL) */
 const CarnivalIcon = () => (
-  <div className="w-14 h-14 relative flex items-center justify-center select-none">
+  <div className="w-full h-full relative flex items-center justify-center select-none">
     {/* Outer spinning carnival star / pinwheel */}
     <motion.svg
       viewBox="0 0 64 64"
@@ -610,7 +634,7 @@ const CarnivalIcon = () => (
 /* BARAAT & DHOL PROCESSION ICON (BALANCED & ANIMATED PROCESSION DHOL) */
 const BaraatIcon = () => (
   <motion.div 
-    className="w-14 h-14 relative flex items-center justify-center select-none"
+    className="w-full h-full relative flex items-center justify-center select-none"
     animate={{ y: [0, -2.5, 0] }}
     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
   >
@@ -651,7 +675,7 @@ const BaraatIcon = () => (
 
 const WeddingMuhurthamIcon = () => (
   <motion.div 
-    className="w-14 h-14 relative flex items-center justify-center select-none"
+    className="w-full h-full relative flex items-center justify-center select-none"
     animate={{ y: [0, -2, 0] }}
     transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
   >
@@ -1412,9 +1436,9 @@ export default function WeddingInvite() {
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="space-y-6">
           <div className="flex flex-col items-center justify-center mb-2">
             <div className="flex items-center justify-center gap-3 sm:gap-6">
-              <MorPankhMotif className="w-8 h-12 sm:w-10 sm:h-14 -rotate-12 shrink-0" />
-              <BrideGroomLogo className="w-36 h-36 sm:w-44 sm:h-44 drop-shadow-md shrink-0" />
-              <MorPankhMotif className="w-8 h-12 sm:w-10 sm:h-14 rotate-12 scale-x-[-1] shrink-0" />
+              <MorPankhMotif className="w-10 h-16 sm:w-14 sm:h-20 -rotate-12 shrink-0" />
+              <BrideGroomLogo className="w-40 h-40 sm:w-48 sm:h-48 drop-shadow-lg shrink-0" />
+              <MorPankhMotif className="w-10 h-16 sm:w-14 sm:h-20 rotate-12 scale-x-[-1] shrink-0" />
             </div>
             <span className="text-[11px] font-sans text-amber-700 tracking-widest uppercase mt-2 font-semibold">
               ❦ Bride Bhavna &amp; Groom Devansh ❦
