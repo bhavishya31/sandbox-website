@@ -220,6 +220,35 @@ const BandBaajaSticker = ({ className = "w-16 h-16", showLabel = false, onBeatCl
   );
 };
 
+/* METALLIC GOLD FOIL SHIMMER TYPOGRAPHY (POLISH & ELEGANCE) */
+const GoldShimmerText = ({ children, className = "" }) => (
+  <motion.span
+    className={`inline-block bg-clip-text text-transparent bg-gradient-to-r from-[#831828] via-[#eab308] via-[#fef08a] via-[#f59e0b] to-[#831828] bg-[length:250%_100%] ${className}`}
+    animate={{ backgroundPosition: ["0% center", "-250% center"] }}
+    transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+  >
+    {children}
+  </motion.span>
+);
+
+/* ROYAL RAJASTHANI PEACOCK FEATHER MOTIF (MOR PANKH) */
+const MorPankhMotif = ({ className = "w-10 h-14" }) => (
+  <motion.div
+    className={`inline-block select-none ${className}`}
+    animate={{ rotate: [-3, 3, -3] }}
+    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 60 90" className="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 30 85 Q 31 50 30 10" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M 30 45 C 10 40 8 18 30 10 C 52 18 50 40 30 45 Z" fill="#047857" opacity="0.85" />
+      <ellipse cx="30" cy="26" rx="14" ry="12" fill="#0284C7" />
+      <ellipse cx="30" cy="27" rx="9" ry="8" fill="#1E3A8A" />
+      <ellipse cx="30" cy="28" rx="4.5" ry="4" fill="#F59E0B" />
+      <path d="M 18 38 L 10 44 M 42 38 L 50 44 M 16 28 L 6 30 M 44 28 L 54 30 M 20 18 L 12 16 M 40 18 L 48 16" stroke="#10B981" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+    </svg>
+  </motion.div>
+);
+
 /* ROYAL RAJASTHANI MOTIF ARTWORK (Elephant, Camel, Horse) */
 const RoyalElephant = ({ className = "w-12 h-12" }) => (
   <svg viewBox="0 0 100 80" className={className} fill="currentColor">
@@ -247,61 +276,6 @@ const RoyalHorse = ({ className = "w-12 h-12" }) => (
     <path d="M76 8 C78 4 82 4 82 7 C82 10 78 11 76 8 Z" fill="#DC2626" />
     <path d="M48 38 C54 44 64 42 67 37 L69 47 C63 50 54 50 47 45 Z" fill="#F59E0B" />
   </svg>
-);
-
-/* ROYAL RAJASTHANI PEACOCK FEATHER MOTIF (MOR PANKH) */
-const MorPankhMotif = ({ className = "w-10 h-14" }) => (
-  <motion.div
-    className={`inline-block select-none ${className}`}
-    animate={{ rotate: [-3, 3, -3] }}
-    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-  >
-    <svg viewBox="0 0 60 90" className="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Quill Stem */}
-      <path d="M 30 85 Q 31 50 30 10" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" />
-      {/* Outer Feather Vanes (Emerald Green) */}
-      <path d="M 30 45 C 10 40 8 18 30 10 C 52 18 50 40 30 45 Z" fill="#047857" opacity="0.85" />
-      {/* Middle Turquoise Ring */}
-      <ellipse cx="30" cy="26" rx="14" ry="12" fill="#0284C7" />
-      {/* Inner Sapphire Blue Eye */}
-      <ellipse cx="30" cy="27" rx="9" ry="8" fill="#1E3A8A" />
-      {/* Golden Core Glow */}
-      <ellipse cx="30" cy="28" rx="4.5" ry="4" fill="#F59E0B" />
-      {/* Delicate radiating barb lines */}
-      <path d="M 18 38 L 10 44 M 42 38 L 50 44 M 16 28 L 6 30 M 44 28 L 54 30 M 20 18 L 12 16 M 40 18 L 48 16" stroke="#10B981" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
-    </svg>
-  </motion.div>
-);
-
-/* SHAHI SAWARI / ROYAL CARAVAN ANIMATED PROCESSION DIVIDER */
-const RoyalCaravanDivider = () => (
-  <div className="w-full overflow-hidden py-3 bg-gradient-to-r from-amber-100/35 via-amber-200/50 to-amber-100/35 border-y border-amber-300/40 relative">
-    <motion.div 
-      className="flex whitespace-nowrap items-center gap-12 text-amber-800/65 select-none"
-      animate={{ x: ["0%", "-50%"] }}
-      transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-      style={{ width: "fit-content" }}
-    >
-      {[0, 1].map((copy) => (
-        <div key={copy} className="flex items-center gap-12 shrink-0" aria-hidden={copy === 1}>
-          <div className="flex items-center gap-2.5">
-            <RoyalElephant className="w-9 h-9" />
-            <span className="text-[10px] uppercase tracking-widest font-sans font-bold text-amber-900/70">शाही सवारी</span>
-          </div>
-          <RoyalCamel className="w-8 h-8" />
-          <RoyalHorse className="w-8 h-8" />
-          <MorPankhMotif className="w-6 h-9" />
-          <RoyalElephant className="w-9 h-9" />
-          <RoyalCamel className="w-8 h-8" />
-          <div className="flex items-center gap-2.5">
-            <RoyalHorse className="w-8 h-8" />
-            <span className="text-[10px] uppercase tracking-widest font-sans font-bold text-amber-900/70">पधारो म्हारे देस</span>
-          </div>
-          <MorPankhMotif className="w-6 h-9" />
-        </div>
-      ))}
-    </motion.div>
-  </div>
 );
 
 /* ORNAMENTAL CORNER BORDER COMPONENT */
@@ -948,8 +922,15 @@ export default function WeddingInvite() {
                   onClick={handleOpenInvitation}
                   className="group relative inline-flex flex-col items-center justify-center transition-transform hover:scale-105 active:scale-95 focus:outline-none"
                 >
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#58111A] via-[#831828] to-amber-600 shadow-2xl flex items-center justify-center border-2 border-amber-300 text-amber-100 ring-4 ring-amber-300/40">
-                    <Heart className="w-8 h-8 fill-white/90 animate-pulse text-white" />
+                  <div className="relative">
+                    <motion.div 
+                      className="absolute -inset-2 rounded-full border-2 border-amber-400/40"
+                      animate={{ scale: [1, 1.18, 1], opacity: [0.3, 0.8, 0.3] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#58111A] via-[#831828] to-amber-600 shadow-2xl flex items-center justify-center border-2 border-amber-300 text-amber-100 ring-4 ring-amber-300/40">
+                      <Heart className="w-8 h-8 fill-white/90 animate-pulse text-white drop-shadow-md" />
+                    </div>
                   </div>
                   <span className="mt-3 text-xs font-sans tracking-[0.25em] text-[#831828] uppercase font-semibold group-hover:text-amber-700">
                     Khamma Ghani • Open Invitation ❦
@@ -999,11 +980,34 @@ export default function WeddingInvite() {
 
         <button 
           onClick={toggleMusic}
-          className="flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md text-gray-700 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-lg border border-stone-200 hover:bg-stone-50 transition-all text-[11px] sm:text-xs font-sans tracking-wider uppercase"
+          className="relative flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md text-gray-700 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-lg border border-stone-200 hover:bg-stone-50 transition-all text-[11px] sm:text-xs font-sans tracking-wider uppercase group"
         >
+          {isPlaying && (
+            <>
+              <span className="absolute -inset-1 rounded-full border-2 border-amber-400/50 animate-ping pointer-events-none" />
+              <span className="absolute -inset-2 rounded-full border border-rose-400/30 animate-pulse pointer-events-none" />
+            </>
+          )}
           {isPlaying ? (
             <>
-              <Volume2 size={16} className="text-[#831828] animate-pulse" />
+              <div className="flex items-end gap-0.5 h-3.5 w-3.5 shrink-0 pb-0.5">
+                <motion.span 
+                  className="w-1 bg-[#831828] rounded-full" 
+                  animate={{ height: ["4px", "14px", "6px"] }} 
+                  transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }} 
+                />
+                <motion.span 
+                  className="w-1 bg-amber-500 rounded-full" 
+                  animate={{ height: ["12px", "4px", "14px"] }} 
+                  transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.1 }} 
+                />
+                <motion.span 
+                  className="w-1 bg-[#831828] rounded-full" 
+                  animate={{ height: ["6px", "13px", "4px"] }} 
+                  transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut", delay: 0.2 }} 
+                />
+              </div>
+              <Volume2 size={16} className="text-[#831828]" />
               <span>Mute Music</span>
             </>
           ) : (
@@ -1063,17 +1067,17 @@ export default function WeddingInvite() {
             </div>
 
             <h1 className="text-3xl sm:text-6xl md:text-8xl font-serif font-light tracking-[0.08em] sm:tracking-[0.12em] md:tracking-[0.16em] uppercase leading-tight select-none drop-shadow-sm flex flex-wrap items-center justify-center">
-              <span className="bg-gradient-to-b from-[#6b1420] via-[#831828] to-[#991b1b] bg-clip-text text-transparent font-medium drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]">
+              <GoldShimmerText className="font-medium drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]">
                 Bhavna
-              </span>
+              </GoldShimmerText>
               <span className="relative inline-flex items-center justify-center mx-2 sm:mx-4 md:mx-6 my-1 sm:my-0 align-middle">
                 <span className="w-8 h-8 sm:w-11 sm:h-11 md:w-14 md:h-14 rounded-full border border-amber-300/80 bg-gradient-to-tr from-[#FFFBEB] via-white to-[#FEF3C7] shadow-md flex items-center justify-center ring-2 ring-amber-400/30">
                   <span className="text-[#831828] font-serif italic text-lg sm:text-2xl md:text-3xl font-normal leading-none -mt-0.5">&amp;</span>
                 </span>
               </span>
-              <span className="bg-gradient-to-b from-[#6b1420] via-[#831828] to-[#991b1b] bg-clip-text text-transparent font-medium drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]">
+              <GoldShimmerText className="font-medium drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]">
                 Devansh
-              </span>
+              </GoldShimmerText>
             </h1>
 
             {/* Ornate bottom underline */}
@@ -1115,9 +1119,6 @@ export default function WeddingInvite() {
           </a>
         </div>
       </section>
-
-      {/* SHAHI SAWARI / ROYAL CARAVAN PROCESSION DIVIDER */}
-      <RoyalCaravanDivider />
 
       {/* COUNTDOWN TIMER */}
       <section id="countdown" className="py-14 sm:py-20 bg-[#FDFBF7]/85 backdrop-blur-sm border-y border-amber-200/60">
