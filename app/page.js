@@ -249,6 +249,61 @@ const RoyalHorse = ({ className = "w-12 h-12" }) => (
   </svg>
 );
 
+/* ROYAL RAJASTHANI PEACOCK FEATHER MOTIF (MOR PANKH) */
+const MorPankhMotif = ({ className = "w-10 h-14" }) => (
+  <motion.div
+    className={`inline-block select-none ${className}`}
+    animate={{ rotate: [-3, 3, -3] }}
+    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 60 90" className="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Quill Stem */}
+      <path d="M 30 85 Q 31 50 30 10" stroke="#D97706" strokeWidth="1.5" strokeLinecap="round" />
+      {/* Outer Feather Vanes (Emerald Green) */}
+      <path d="M 30 45 C 10 40 8 18 30 10 C 52 18 50 40 30 45 Z" fill="#047857" opacity="0.85" />
+      {/* Middle Turquoise Ring */}
+      <ellipse cx="30" cy="26" rx="14" ry="12" fill="#0284C7" />
+      {/* Inner Sapphire Blue Eye */}
+      <ellipse cx="30" cy="27" rx="9" ry="8" fill="#1E3A8A" />
+      {/* Golden Core Glow */}
+      <ellipse cx="30" cy="28" rx="4.5" ry="4" fill="#F59E0B" />
+      {/* Delicate radiating barb lines */}
+      <path d="M 18 38 L 10 44 M 42 38 L 50 44 M 16 28 L 6 30 M 44 28 L 54 30 M 20 18 L 12 16 M 40 18 L 48 16" stroke="#10B981" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+    </svg>
+  </motion.div>
+);
+
+/* SHAHI SAWARI / ROYAL CARAVAN ANIMATED PROCESSION DIVIDER */
+const RoyalCaravanDivider = () => (
+  <div className="w-full overflow-hidden py-3 bg-gradient-to-r from-amber-100/35 via-amber-200/50 to-amber-100/35 border-y border-amber-300/40 relative">
+    <motion.div 
+      className="flex whitespace-nowrap items-center gap-12 text-amber-800/65 select-none"
+      animate={{ x: ["0%", "-50%"] }}
+      transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+      style={{ width: "fit-content" }}
+    >
+      {[0, 1].map((copy) => (
+        <div key={copy} className="flex items-center gap-12 shrink-0" aria-hidden={copy === 1}>
+          <div className="flex items-center gap-2.5">
+            <RoyalElephant className="w-9 h-9" />
+            <span className="text-[10px] uppercase tracking-widest font-sans font-bold text-amber-900/70">शाही सवारी</span>
+          </div>
+          <RoyalCamel className="w-8 h-8" />
+          <RoyalHorse className="w-8 h-8" />
+          <MorPankhMotif className="w-6 h-9" />
+          <RoyalElephant className="w-9 h-9" />
+          <RoyalCamel className="w-8 h-8" />
+          <div className="flex items-center gap-2.5">
+            <RoyalHorse className="w-8 h-8" />
+            <span className="text-[10px] uppercase tracking-widest font-sans font-bold text-amber-900/70">पधारो म्हारे देस</span>
+          </div>
+          <MorPankhMotif className="w-6 h-9" />
+        </div>
+      ))}
+    </motion.div>
+  </div>
+);
+
 /* ORNAMENTAL CORNER BORDER COMPONENT */
 const RoyalCorner = ({ position = "top-left" }) => {
   const styles = {
@@ -1061,6 +1116,9 @@ export default function WeddingInvite() {
         </div>
       </section>
 
+      {/* SHAHI SAWARI / ROYAL CARAVAN PROCESSION DIVIDER */}
+      <RoyalCaravanDivider />
+
       {/* COUNTDOWN TIMER */}
       <section id="countdown" className="py-14 sm:py-20 bg-[#FDFBF7]/85 backdrop-blur-sm border-y border-amber-200/60">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp} className="max-w-3xl mx-auto px-4 text-center">
@@ -1090,7 +1148,11 @@ export default function WeddingInvite() {
       <section className="py-24 max-w-3xl mx-auto px-6 text-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="space-y-6">
           <div className="flex flex-col items-center justify-center mb-2">
-            <BrideGroomLogo className="w-28 h-28 md:w-36 md:h-36 mx-auto drop-shadow-md" />
+            <div className="flex items-center justify-center gap-2 sm:gap-4">
+              <MorPankhMotif className="w-7 h-10 sm:w-9 sm:h-12 -rotate-12" />
+              <BrideGroomLogo className="w-28 h-28 md:w-36 md:h-36 mx-auto drop-shadow-md" />
+              <MorPankhMotif className="w-7 h-10 sm:w-9 sm:h-12 rotate-12 scale-x-[-1]" />
+            </div>
             <span className="text-[11px] font-sans text-amber-700 tracking-widest uppercase mt-2 font-semibold">
               ❦ Bride Bhavna &amp; Groom Devansh ❦
             </span>
