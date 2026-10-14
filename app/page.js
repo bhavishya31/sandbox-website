@@ -299,64 +299,159 @@ const RoyalCorner = ({ position = "top-left" }) => {
 
 /* CEREMONY LOGO ICONS */
 const GaneshPujaIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
-    <path d="M32 8 C32 8 26 17 26 22 C26 25.3 28.7 28 32 28 C35.3 28 38 25.3 38 22 C38 17 32 8 32 8Z" fill="#F59E0B" stroke="#D97706" strokeWidth="1.5" />
-    <path d="M32 14 C32 14 29 19 29 22 C29 23.7 30.3 25 32 25 C33.7 25 35 23.7 35 22 C35 19 32 14 32 14Z" fill="#FDE68A" />
-    <ellipse cx="32" cy="33" rx="10" ry="2" stroke="#B45309" strokeWidth="1.5" fill="#FDE68A" />
-    <path d="M22 33 Q14 43 20 52 C23 56 41 56 44 52 Q50 43 42 33 Z" fill="#FEF3C7" stroke="#B45309" strokeWidth="1.8" />
-    <circle cx="32" cy="42" r="2.5" fill="#DC2626" />
-    <path d="M25 54 L39 54" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
-    <path d="M24 32 C21 27 16 27 15 29 C17 33 22 33 24 32 Z" fill="#10B981" />
-    <path d="M40 32 C43 27 48 27 49 29 C47 33 42 33 40 32 Z" fill="#10B981" />
-  </svg>
+  <motion.div 
+    className="w-12 h-12 relative flex items-center justify-center select-none"
+    animate={{ y: [0, -2, 0] }}
+    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 64 64" className="w-full h-full drop-shadow-sm" fill="none">
+      {/* Diya Flame with flickering animation */}
+      <motion.g
+        animate={{ scale: [1, 1.15, 0.95, 1.1, 1], y: [0, -1.5, 0.5, -1, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "32px 18px" }}
+      >
+        <path d="M32 8 C32 8 26 17 26 22 C26 25.3 28.7 28 32 28 C35.3 28 38 25.3 38 22 C38 17 32 8 32 8Z" fill="#F59E0B" stroke="#D97706" strokeWidth="1.5" />
+        <path d="M32 14 C32 14 29 19 29 22 C29 23.7 30.3 25 32 25 C33.7 25 35 23.7 35 22 C35 19 32 14 32 14Z" fill="#FEF08A" />
+      </motion.g>
+      <ellipse cx="32" cy="33" rx="10" ry="2" stroke="#B45309" strokeWidth="1.5" fill="#FDE68A" />
+      <path d="M22 33 Q14 43 20 52 C23 56 41 56 44 52 Q50 43 42 33 Z" fill="#FEF3C7" stroke="#B45309" strokeWidth="1.8" />
+      <motion.circle 
+        cx="32" cy="42" r="2.5" fill="#DC2626"
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <path d="M25 54 L39 54" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
+      <path d="M24 32 C21 27 16 27 15 29 C17 33 22 33 24 32 Z" fill="#10B981" />
+      <path d="M40 32 C43 27 48 27 49 29 C47 33 42 33 40 32 Z" fill="#10B981" />
+    </svg>
+  </motion.div>
 );
 
 const MehendiIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
-    <circle cx="32" cy="32" r="26" stroke="#059669" strokeWidth="1.5" strokeDasharray="3 3" />
-    <circle cx="32" cy="32" r="20" stroke="#10B981" strokeWidth="1.2" />
-    <circle cx="32" cy="32" r="6" fill="#047857" />
-    {MEHENDI_ANGLES.map((angle, i) => (
-      <g key={i} transform={`rotate(${angle} 32 32)`}>
-        <path d="M32 14 C29 18 29 23 32 26 C35 23 35 18 32 14 Z" fill="#A7F3D0" stroke="#059669" strokeWidth="1.2" />
-        <circle cx="32" cy="10" r="1.5" fill="#047857" />
-      </g>
-    ))}
-  </svg>
+  <div className="w-12 h-12 relative flex items-center justify-center select-none">
+    {/* Outer rotating dashed mandala ring */}
+    <motion.svg
+      viewBox="0 0 64 64"
+      className="w-full h-full absolute inset-0"
+      fill="none"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+    >
+      <circle cx="32" cy="32" r="27" stroke="#059669" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.8" />
+    </motion.svg>
+    {/* Inner blooming floral petals */}
+    <motion.svg
+      viewBox="0 0 64 64"
+      className="w-full h-full"
+      fill="none"
+      animate={{ rotate: [-360, 0] }}
+      transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
+    >
+      <circle cx="32" cy="32" r="20" stroke="#10B981" strokeWidth="1.2" />
+      <circle cx="32" cy="32" r="6" fill="#047857" />
+      {MEHENDI_ANGLES.map((angle, i) => (
+        <g key={i} transform={`rotate(${angle} 32 32)`}>
+          <path d="M32 14 C29 18 29 23 32 26 C35 23 35 18 32 14 Z" fill="#A7F3D0" stroke="#059669" strokeWidth="1.2" />
+          <circle cx="32" cy="10" r="1.5" fill="#047857" />
+        </g>
+      ))}
+    </motion.svg>
+  </div>
 );
 
 const HaldiIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
-    {HALDI_ANGLES.map((angle, i) => (
-      <g key={i} transform={`rotate(${angle} 32 26)`}>
-        <path d="M32 8 Q34 14 32 18 Q30 14 32 8 Z" fill="#F59E0B" />
-      </g>
-    ))}
-    <circle cx="32" cy="26" r="9" fill="#FCD34D" stroke="#D97706" strokeWidth="1.5" />
-    <path d="M12 40 C12 40 16 54 32 54 C48 54 52 40 52 40 Z" fill="#FDE68A" stroke="#B45309" strokeWidth="2" />
-    <ellipse cx="32" cy="40" rx="20" ry="4" fill="#F59E0B" stroke="#B45309" strokeWidth="1.5" />
-    <circle cx="26" cy="40" r="2.5" fill="#EF4444" />
-    <circle cx="32" cy="41" r="3" fill="#FBBF24" />
-    <circle cx="38" cy="40" r="2.5" fill="#EF4444" />
-    <path d="M24 54 L40 54" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
-  </svg>
+  <motion.div
+    className="w-12 h-12 relative flex items-center justify-center select-none"
+    animate={{ scale: [1, 1.04, 1] }}
+    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 64 64" className="w-full h-full" fill="none">
+      {/* Rotating Sun Rays */}
+      <motion.g
+        animate={{ rotate: 360 }}
+        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+        style={{ transformOrigin: "32px 26px" }}
+      >
+        {HALDI_ANGLES.map((angle, i) => (
+          <g key={i} transform={`rotate(${angle} 32 26)`}>
+            <path d="M32 8 Q34 14 32 18 Q30 14 32 8 Z" fill="#F59E0B" />
+          </g>
+        ))}
+      </motion.g>
+      <circle cx="32" cy="26" r="9" fill="#FCD34D" stroke="#D97706" strokeWidth="1.5" />
+      {/* Auspicious Bowl with turmeric paste */}
+      <path d="M12 40 C12 40 16 54 32 54 C48 54 52 40 52 40 Z" fill="#FDE68A" stroke="#B45309" strokeWidth="2" />
+      <ellipse cx="32" cy="40" rx="20" ry="4" fill="#F59E0B" stroke="#B45309" strokeWidth="1.5" />
+      <motion.circle 
+        cx="26" cy="40" r="2.5" fill="#EF4444"
+        animate={{ scale: [1, 1.25, 1] }}
+        transition={{ duration: 1.8, repeat: Infinity, delay: 0.2 }}
+      />
+      <motion.circle 
+        cx="32" cy="41" r="3" fill="#FBBF24"
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 1.8, repeat: Infinity, delay: 0.4 }}
+      />
+      <motion.circle 
+        cx="38" cy="40" r="2.5" fill="#EF4444"
+        animate={{ scale: [1, 1.25, 1] }}
+        transition={{ duration: 1.8, repeat: Infinity, delay: 0.6 }}
+      />
+      <path d="M24 54 L40 54" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  </motion.div>
 );
 
 const SangeetIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
-    <circle cx="27" cy="20" r="9" stroke="#EC4899" strokeWidth="2" />
-    <circle cx="37" cy="20" r="9" stroke="#8B5CF6" strokeWidth="2" />
-    <path d="M37 11 L35 8 L39 8 Z" fill="#F59E0B" stroke="#D97706" strokeWidth="1" />
-    <path d="M18 39 C18 35 21 33 22 33 L42 33 C43 33 46 35 46 39 L46 49 C46 54 43 56 42 56 L22 56 C21 56 18 54 18 49 Z" fill="#FCE7F3" stroke="#DB2777" strokeWidth="1.5" />
-    <ellipse cx="20" cy="44" rx="2" ry="6" fill="#BE185D" />
-    <ellipse cx="44" cy="44" rx="2" ry="6" fill="#BE185D" />
-    <path d="M20 38 L44 50 M20 50 L44 38 M20 44 L44 44" stroke="#9D174D" strokeWidth="1" />
-  </svg>
+  <motion.div 
+    className="w-12 h-12 relative flex items-center justify-center select-none"
+    animate={{ y: [0, -2, 0] }}
+    transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 64 64" className="w-full h-full" fill="none">
+      {/* Intertwined Wedding Rings with gentle shimmer */}
+      <motion.g
+        animate={{ rotate: [-2, 2, -2] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "32px 20px" }}
+      >
+        <circle cx="27" cy="20" r="9" stroke="#EC4899" strokeWidth="2" />
+        <circle cx="37" cy="20" r="9" stroke="#8B5CF6" strokeWidth="2" />
+        <path d="M37 11 L35 8 L39 8 Z" fill="#F59E0B" stroke="#D97706" strokeWidth="1" />
+      </motion.g>
+      {/* Resonating Musical Dholak with bouncing pulse */}
+      <motion.g
+        animate={{ scale: [1, 1.05, 0.98, 1.03, 1] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "32px 45px" }}
+      >
+        <path d="M18 39 C18 35 21 33 22 33 L42 33 C43 33 46 35 46 39 L46 49 C46 54 43 56 42 56 L22 56 C21 56 18 54 18 49 Z" fill="#FCE7F3" stroke="#DB2777" strokeWidth="1.5" />
+        <ellipse cx="20" cy="44" rx="2" ry="6" fill="#BE185D" />
+        <ellipse cx="44" cy="44" rx="2" ry="6" fill="#BE185D" />
+        <path d="M20 38 L44 50 M20 50 L44 38 M20 44 L44 44" stroke="#9D174D" strokeWidth="1" />
+      </motion.g>
+      {/* Floating musical note */}
+      <motion.path 
+        d="M 50 14 Q 53 10 57 12 L 57 19 M 54 19 A 2 2 0 1 1 52 17" 
+        stroke="#F59E0B" 
+        strokeWidth="1.5" 
+        fill="#F59E0B"
+        animate={{ y: [0, -3, 0], opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </svg>
+  </motion.div>
 );
 
 /* CHAAK CEREMONY ICON (Traditional Decorated Terracotta Kalash & Matka) */
 const ChaakIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
+  <motion.div
+    className="w-12 h-12 relative flex items-center justify-center select-none"
+    animate={{ rotate: [-2, 2, -2] }}
+    transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 64 64" className="w-full h-full drop-shadow-xs" fill="none">
     <ellipse cx="32" cy="52" rx="12" ry="3" fill="#7C2D12" opacity="0.25" />
     <path d="M24 51 L40 51" stroke="#9A3412" strokeWidth="2" strokeLinecap="round" />
     {/* Terracotta Earthen Clay Body */}
@@ -366,9 +461,15 @@ const ChaakIcon = () => (
     <ellipse cx="32" cy="23" rx="8" ry="2.5" fill="#FDE68A" stroke="#B45309" strokeWidth="1.5" />
     {/* Auspicious Coconut (Nariyal) */}
     <path d="M32 12 C28 16 28 22 32 23 C36 22 36 16 32 12 Z" fill="#78350F" stroke="#451A03" strokeWidth="1.2" />
-    {/* Mango Leaves (Aam Patte) */}
-    <path d="M26 23 C20 20 20 16 22 13 C25 16 27 19 28 22 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
-    <path d="M38 23 C44 20 44 16 42 13 C39 16 37 19 36 22 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
+      {/* Mango Leaves (Aam Patte) with breathing animation */}
+      <motion.g
+        animate={{ scale: [1, 1.06, 1] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "32px 23px" }}
+      >
+        <path d="M26 23 C20 20 20 16 22 13 C25 16 27 19 28 22 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
+        <path d="M38 23 C44 20 44 16 42 13 C39 16 37 19 36 22 Z" fill="#059669" stroke="#047857" strokeWidth="1" />
+      </motion.g>
     {/* Festive Kumkum & Gold Bands */}
     <path d="M19 36 Q32 41 45 36" stroke="#FEF08A" strokeWidth="2" strokeLinecap="round" />
     <path d="M21 42 Q32 47 43 42" stroke="#FEF3C7" strokeWidth="1.5" strokeDasharray="2 2" />
@@ -378,11 +479,20 @@ const ChaakIcon = () => (
     <circle cx="38" cy="35" r="1.6" fill="#FDE047" />
     <circle cx="32" cy="44" r="2.2" fill="#FEF08A" />
   </svg>
+  </motion.div>
 );
 
 /* CARNIVAL DANCE CELEBRATION ICON */
 const CarnivalIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
+  <div className="w-12 h-12 relative flex items-center justify-center select-none">
+    {/* Outer spinning carnival star / pinwheel */}
+    <motion.svg
+      viewBox="0 0 64 64"
+      className="w-full h-full"
+      fill="none"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+    >
     <circle cx="32" cy="32" r="24" stroke="#F59E0B" strokeWidth="1.5" strokeDasharray="3 3" />
     <path d="M18 46 L46 18" stroke="#DC2626" strokeWidth="3" strokeLinecap="round" />
     <path d="M46 46 L18 18" stroke="#D97706" strokeWidth="3" strokeLinecap="round" />
@@ -390,12 +500,18 @@ const CarnivalIcon = () => (
     <circle cx="46" cy="18" r="3" fill="#DC2626" />
     <circle cx="18" cy="46" r="3" fill="#DC2626" />
     <circle cx="46" cy="46" r="3" fill="#F59E0B" />
-    <circle cx="32" cy="32" r="5" fill="#EF4444" stroke="#FEF3C7" strokeWidth="1.5" />
     <circle cx="32" cy="14" r="2" fill="#F59E0B" />
     <circle cx="32" cy="50" r="2" fill="#F59E0B" />
     <circle cx="14" cy="32" r="2" fill="#DC2626" />
     <circle cx="50" cy="32" r="2" fill="#DC2626" />
-  </svg>
+    </motion.svg>
+    {/* Center dancing gem */}
+    <motion.div
+      className="w-3.5 h-3.5 rounded-full bg-[#EF4444] border-2 border-[#FEF3C7] absolute"
+      animate={{ scale: [1, 1.35, 1] }}
+      transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+    />
+  </div>
 );
 
 /* BARAAT & DHOL PROCESSION ICON (ANIMATED PERSON DANCING ON DHOLAK) */
@@ -406,16 +522,39 @@ const BaraatIcon = ({ onBeatClick }) => (
 );
 
 const WeddingMuhurthamIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
-    <path d="M14 24 C22 16 42 16 50 24 L52 28 L12 28 Z" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.5" />
-    <circle cx="32" cy="14" r="2.5" fill="#F59E0B" />
-    <rect x="16" y="28" width="3" height="24" rx="1.5" fill="#DC2626" />
-    <rect x="45" y="28" width="3" height="24" rx="1.5" fill="#DC2626" />
-    <path d="M19 32 Q32 39 45 32" stroke="#F59E0B" strokeWidth="1.8" strokeDasharray="2 3" />
-    <path d="M24 48 L40 48 L37 54 L27 54 Z" fill="#FDE68A" stroke="#B45309" strokeWidth="1.5" />
-    <path d="M32 37 C32 37 28 42 28 45 C28 47.2 29.8 48 32 48 C34.2 48 36 47.2 36 45 C36 42 32 37 32 37 Z" fill="#EF4444" />
-    <path d="M32 40 C32 40 30 43 30 44 C30 45.1 30.9 46 32 46 C33.1 46 34 45.1 34 44 C34 43 32 40 32 40 Z" fill="#FBBF24" />
-  </svg>
+  <motion.div 
+    className="w-12 h-12 relative flex items-center justify-center select-none"
+    animate={{ y: [0, -2, 0] }}
+    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+  >
+    <svg viewBox="0 0 64 64" className="w-full h-full" fill="none">
+      {/* Sacred Mandap Canopy */}
+      <path d="M14 24 C22 16 42 16 50 24 L52 28 L12 28 Z" fill="#FEE2E2" stroke="#DC2626" strokeWidth="1.5" />
+      <motion.circle 
+        cx="32" cy="14" r="2.5" fill="#F59E0B"
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+      <rect x="16" y="28" width="3" height="24" rx="1.5" fill="#DC2626" />
+      <rect x="45" y="28" width="3" height="24" rx="1.5" fill="#DC2626" />
+      <path d="M19 32 Q32 39 45 32" stroke="#F59E0B" strokeWidth="1.8" strokeDasharray="2 3" />
+      {/* Sacred Fire Pit / Havan Kund */}
+      <path d="M24 48 L40 48 L37 54 L27 54 Z" fill="#FDE68A" stroke="#B45309" strokeWidth="1.5" />
+      {/* Auspicious Holy Agni / Sacred Flame Animation */}
+      <motion.g
+        animate={{ 
+          scaleY: [1, 1.18, 0.92, 1.12, 1],
+          scaleX: [1, 0.94, 1.06, 0.96, 1]
+        }}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "32px 48px" }}
+      >
+        <path d="M32 36 C32 36 27 42 27 45 C27 47.5 29.5 48 32 48 C34.5 48 37 47.5 37 45 C37 42 32 36 32 36 Z" fill="#EF4444" />
+        <path d="M32 39 C32 39 29.5 42 29.5 44 C29.5 45.2 30.5 46 32 46 C33.5 46 34.5 45.2 34.5 44 C34.5 42 32 39 32 39 Z" fill="#FBBF24" />
+        <circle cx="32" cy="43" r="1.5" fill="#FFFBEB" />
+      </motion.g>
+    </svg>
+  </motion.div>
 );
 
 /* PERSON DANCING ON DHOLAK (FOLK BARAAT & SANGEET ANIMATION) */
@@ -876,15 +1015,6 @@ export default function WeddingInvite() {
             <RoyalCorner position="top-right" />
             <RoyalCorner position="bottom-left" />
             <RoyalCorner position="bottom-right" />
-
-            {/* Floating Band Baaja Sticker on Modal Corner */}
-            <div className="absolute -top-2 -right-2 md:top-2 md:right-2 rotate-12 z-20 hover:rotate-0 transition-transform">
-              <BandBaajaSticker 
-                className="w-16 h-16 md:w-20 md:h-20" 
-                showLabel={true} 
-                onBeatClick={triggerDholBurst} 
-              />
-            </div>
 
             {/* Floating Heritage Watermark Icons in Card */}
             <div className="absolute top-4 left-6 opacity-15 text-amber-800 pointer-events-none">
