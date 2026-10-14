@@ -369,24 +369,11 @@ const CarnivalIcon = () => (
   </svg>
 );
 
-/* BARAAT & DHOL PROCESSION ICON */
-const BaraatIcon = () => (
-  <svg viewBox="0 0 64 64" className="w-12 h-12" fill="none">
-    {/* Dhol Barrel */}
-    <ellipse cx="32" cy="32" rx="14" ry="20" transform="rotate(35 32 32)" fill="#991B1B" stroke="#F59E0B" strokeWidth="1.8" />
-    <ellipse cx="20" cy="23" rx="7" ry="12" transform="rotate(35 20 23)" fill="#FEF3C7" stroke="#B45309" strokeWidth="1.5" />
-    <ellipse cx="44" cy="41" rx="7" ry="12" transform="rotate(35 44 41)" fill="#FDE68A" stroke="#B45309" strokeWidth="1.5" />
-    {/* Dhol Ropes / Bracing */}
-    <path d="M22 14 L42 32 M25 31 L45 50 M16 26 L36 46" stroke="#FEF08A" strokeWidth="1.2" strokeLinecap="round" />
-    {/* Drumsticks / Danka & Chhari */}
-    <path d="M10 18 L26 27" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round" />
-    <circle cx="10" cy="18" r="2.5" fill="#DC2626" />
-    <path d="M12 40 L28 35" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" />
-    {/* Musical Celebration Sparkles */}
-    <circle cx="48" cy="16" r="2" fill="#F59E0B" />
-    <circle cx="54" cy="24" r="1.5" fill="#EF4444" />
-    <circle cx="44" cy="12" r="1.5" fill="#F59E0B" />
-  </svg>
+/* BARAAT & DHOL PROCESSION ICON (ANIMATED PERSON DANCING ON DHOLAK) */
+const BaraatIcon = ({ onBeatClick }) => (
+  <div className="w-16 h-16 flex items-center justify-center">
+    <DancerOnDholak className="w-14 h-16" onBeatClick={onBeatClick} />
+  </div>
 );
 
 const WeddingMuhurthamIcon = () => (
@@ -400,6 +387,156 @@ const WeddingMuhurthamIcon = () => (
     <path d="M32 37 C32 37 28 42 28 45 C28 47.2 29.8 48 32 48 C34.2 48 36 47.2 36 45 C36 42 32 37 32 37 Z" fill="#EF4444" />
     <path d="M32 40 C32 40 30 43 30 44 C30 45.1 30.9 46 32 46 C33.1 46 34 45.1 34 44 C34 43 32 40 32 40 Z" fill="#FBBF24" />
   </svg>
+);
+
+/* PERSON DANCING ON DHOLAK (FOLK BARAAT & SANGEET ANIMATION) */
+const DancerOnDholak = ({ className = "w-28 h-32", onBeatClick }) => (
+  <motion.div
+    whileHover={{ scale: 1.08 }}
+    whileTap={{ scale: 0.94 }}
+    onClick={onBeatClick}
+    className={`relative inline-flex items-center justify-center select-none cursor-pointer group ${className}`}
+    title="Tap to watch the Baraati dance on Dholak beats!"
+  >
+    <svg viewBox="0 0 140 160" className="w-full h-full drop-shadow-md overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Sound Beat Waves Radiating From Drum Sides */}
+      <motion.g
+        animate={{
+          opacity: [0.35, 1, 0.35],
+          scale: [0.92, 1.14, 0.92]
+        }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "70px 123px" }}
+      >
+        {/* Left Waves */}
+        <path d="M 20 108 A 18 18 0 0 0 20 138" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" />
+        <path d="M 12 102 A 26 26 0 0 0 12 144" stroke="#DC2626" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="3 3" />
+        {/* Right Waves */}
+        <path d="M 120 108 A 18 18 0 0 1 120 138" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" />
+        <path d="M 128 102 A 26 26 0 0 1 128 144" stroke="#DC2626" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="3 3" />
+      </motion.g>
+
+      {/* Floating Musical Notes & Sparkles */}
+      <motion.g
+        animate={{
+          y: [0, -7, 0],
+          opacity: [0.6, 1, 0.6]
+        }}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        {/* Musical Note 1 */}
+        <path d="M 22 42 Q 27 36 33 39 L 33 50 M 27 50 A 3 3 0 1 1 24 47" stroke="#DC2626" strokeWidth="1.6" fill="#DC2626" />
+        {/* Musical Note 2 */}
+        <path d="M 114 48 Q 119 42 125 45 L 125 56 M 119 56 A 3 3 0 1 1 116 53" stroke="#F59E0B" strokeWidth="1.6" fill="#F59E0B" />
+        <circle cx="26" cy="72" r="1.8" fill="#F59E0B" />
+        <circle cx="114" cy="74" r="1.8" fill="#DC2626" />
+      </motion.g>
+
+      {/* CEREMONIAL DHOLAK (Pulsing underneath the dancer) */}
+      <motion.g
+        animate={{
+          scaleY: [1, 0.94, 1.04, 0.96, 1],
+          scaleX: [1, 1.03, 0.98, 1.02, 1]
+        }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "70px 123px" }}
+      >
+        {/* Shadow */}
+        <ellipse cx="70" cy="148" rx="42" ry="7" fill="#000000" opacity="0.12" />
+
+        {/* Barrel Body */}
+        <path d="M 28 106 Q 70 96 112 106 L 112 140 Q 70 150 28 140 Z" fill="#831828" stroke="#58111A" strokeWidth="1.5" />
+
+        {/* Left Drumhead Rim & Center Shahi Patch */}
+        <ellipse cx="28" cy="123" rx="7" ry="17" fill="#FEF3C7" stroke="#92400E" strokeWidth="1.5" />
+        <ellipse cx="28" cy="123" rx="3.5" ry="9" fill="#78350F" />
+
+        {/* Right Drumhead Rim & Center Shahi Patch */}
+        <ellipse cx="112" cy="123" rx="7" ry="17" fill="#FEF3C7" stroke="#92400E" strokeWidth="1.5" />
+        <ellipse cx="112" cy="123" rx="3.5" ry="9" fill="#78350F" />
+
+        {/* Diagonal Tension Ropes / W-laces */}
+        <path d="M 32 107 L 52 143 L 72 101 L 92 143 L 110 107 M 32 139 L 52 101 L 72 143 L 92 101 L 110 139" stroke="#FEF08A" strokeWidth="1.4" strokeLinecap="round" />
+
+        {/* Center Golden Ring Band & Brooch */}
+        <ellipse cx="70" cy="123" rx="3.5" ry="22" fill="none" stroke="#F59E0B" strokeWidth="2" />
+        <circle cx="70" cy="123" r="3" fill="#DC2626" stroke="#FEF08A" strokeWidth="0.8" />
+      </motion.g>
+
+      {/* PERSON DANCING ON TOP OF THE DHOLAK */}
+      <motion.g
+        animate={{
+          y: [0, -11, 2, -7, 0],
+          rotate: [-4, 4, -2, 4, -4]
+        }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "70px 105px" }}
+      >
+        {/* Dancer Legs & Dancing Steps */}
+        {/* Left Leg: Planted rhythmically on dholak top */}
+        <path d="M 64 78 L 58 90 L 55 104" stroke="#D97706" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="55" cy="103" r="3" fill="#78350F" />
+        {/* Ghungroo anklet bells */}
+        <circle cx="55" cy="99" r="1.5" fill="#FBBF24" />
+        <circle cx="58" cy="99" r="1.5" fill="#FBBF24" />
+
+        {/* Right Leg: Joyously raised in a high-step dance kick */}
+        <path d="M 76 78 L 90 76 L 93 92" stroke="#D97706" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="93" cy="92" r="3" fill="#78350F" />
+        {/* Ghungroo anklet bells */}
+        <circle cx="93" cy="88" r="1.5" fill="#FBBF24" />
+        <circle cx="90" cy="88" r="1.5" fill="#FBBF24" />
+
+        {/* Royal Saffron & Gold Dhoti / Churidar Fabric */}
+        <path d="M 60 72 C 55 84 54 94 58 97 C 62 100 68 85 70 78 C 72 85 78 100 84 92 C 88 86 82 80 80 72 Z" fill="#F59E0B" opacity="0.95" />
+
+        {/* Flowing Festive Waist Sash / Kamarbandh Flapping in Dance */}
+        <motion.path
+          d="M 60 73 Q 44 80 38 92 Q 47 86 64 77 Z"
+          fill="#DC2626"
+          stroke="#B91C1C"
+          strokeWidth="0.8"
+          animate={{ rotate: [-8, 6, -8] }}
+          transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+          style={{ transformOrigin: "62px 74px" }}
+        />
+
+        {/* Torso & Embellished Kurta Vest */}
+        <path d="M 60 52 L 80 52 L 78 74 L 62 74 Z" fill="#DC2626" stroke="#991B1B" strokeWidth="1" />
+        {/* Golden Buttons / Placket */}
+        <line x1="70" y1="52" x2="70" y2="74" stroke="#FBBF24" strokeWidth="1.5" />
+        <circle cx="70" cy="58" r="1.2" fill="#FEF08A" />
+        <circle cx="70" cy="64" r="1.2" fill="#FEF08A" />
+        <circle cx="70" cy="70" r="1.2" fill="#FEF08A" />
+
+        {/* Dancer Raised Left Arm: Celebration Bhangra Gesture */}
+        <path d="M 60 55 Q 42 45 34 30" stroke="#F59E0B" strokeWidth="4.5" strokeLinecap="round" />
+        <circle cx="34" cy="29" r="3.5" fill="#FDE68A" />
+        <circle cx="33" cy="27" r="1.5" fill="#DC2626" />
+
+        {/* Dancer Raised Right Arm: Brandishing a Festive Dance Stick */}
+        <path d="M 80 55 Q 98 45 106 30" stroke="#F59E0B" strokeWidth="4.5" strokeLinecap="round" />
+        <circle cx="106" cy="29" r="3.5" fill="#FDE68A" />
+        {/* Decorative Danka / Chhari Stick */}
+        <line x1="99" y1="36" x2="114" y2="18" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx="114" cy="18" r="2.2" fill="#FBBF24" />
+
+        {/* Head, Joyous Smile & Royal Tilak */}
+        <ellipse cx="70" cy="42" rx="7.5" ry="9" fill="#FDE68A" stroke="#B45309" strokeWidth="0.8" />
+        <line x1="70" y1="36" x2="70" y2="41" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M 67 46 Q 70 49 73 46" stroke="#78350F" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        {/* Traditional Royal Mustache */}
+        <path d="M 66 45 Q 68 44 70 45 Q 72 44 74 45" stroke="#451A03" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+
+        {/* Royal Safa / Turban with Sarpech & Kalgi Brooch */}
+        <path d="M 60 38 Q 70 24 80 38 Q 83 31 70 23 Q 57 31 60 38 Z" fill="#B91C1C" stroke="#7F1D1D" strokeWidth="1" />
+        <path d="M 63 32 Q 70 27 77 32" stroke="#F59E0B" strokeWidth="1.5" fill="none" />
+        {/* Kalgi Feather & Gem */}
+        <path d="M 69 24 Q 70 12 75 14 Q 72 21 70 26" fill="#10B981" stroke="#047857" strokeWidth="0.8" />
+        <circle cx="70" cy="24" r="2.2" fill="#FBBF24" stroke="#DC2626" strokeWidth="0.8" />
+      </motion.g>
+    </svg>
+  </motion.div>
 );
 
 /* TRADITIONAL SWAGAT AARTI THALI (FAMILY & BLESSINGS ANIMATION) */
@@ -807,7 +944,10 @@ export default function WeddingInvite() {
       {/* INTERACTIVE DHOL BEAT PULSE BANNER OVERLAY */}
       {dholBeatPulse && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-          <div className="bg-gradient-to-r from-red-600 via-amber-600 to-rose-600 text-white px-6 py-2.5 rounded-full shadow-2xl border-2 border-amber-300 flex items-center gap-3 animate-bounce">
+          <div className="bg-gradient-to-r from-red-600 via-amber-600 to-rose-600 text-white px-6 py-2 rounded-full shadow-2xl border-2 border-amber-300 flex items-center gap-3 animate-bounce">
+            <div className="w-8 h-9 -my-2 shrink-0">
+              <DancerOnDholak className="w-8 h-9" />
+            </div>
             <PartyPopper size={20} className="text-yellow-300 animate-spin" />
             <span className="font-serif font-bold tracking-widest text-sm uppercase">
               🥁 Dhol Tasha Beats Playing! Dhik-Tana-Nana! 🎺
@@ -1062,11 +1202,20 @@ export default function WeddingInvite() {
                 Auspicious Vedic blessings by mothers, aunts, and elders welcoming groom and bride to the sacred mandap.
               </p>
             </div>
-            <div className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-shadow">
-              <span className="text-2xl block">🥁</span>
-              <h4 className="font-serif text-base text-stone-800 font-semibold">Dhol Tasha &amp; Nagada</h4>
+            <div 
+              onClick={triggerDholBurst}
+              className="bg-[#FFFDF9] p-5 rounded-2xl border border-amber-200/80 shadow-xs text-center space-y-2 hover:shadow-md transition-all cursor-pointer group hover:border-amber-400"
+              title="Tap to join the dance and play dhol beats!"
+            >
+              <div className="flex justify-center -mt-1 mb-1">
+                <DancerOnDholak className="w-24 h-28 group-hover:scale-105 transition-transform" onBeatClick={triggerDholBurst} />
+              </div>
+              <h4 className="font-serif text-base text-stone-800 font-semibold flex items-center justify-center gap-1.5">
+                Dhol Tasha &amp; Nagada Dance
+                <Sparkles size={14} className="text-amber-500 animate-pulse" />
+              </h4>
               <p className="font-sans text-xs text-stone-600 leading-relaxed">
-                Festive high-energy beats by folk artists bringing families and friends together on the dance floor.
+                Festive high-energy beats by folk artists bringing families and friends together on the dance floor. <span className="text-[#831828] font-semibold block mt-1">Tap to dance along! 🥁</span>
               </p>
             </div>
           </div>
