@@ -21,7 +21,7 @@ import {
   Music,
   PartyPopper
 } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const MEHENDI_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
 const HALDI_ANGLES = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
@@ -362,142 +362,6 @@ const RoyalCorner = ({ position = "top-left" }) => {
         <path d="M8 38 L8 16 C8 11.58 11.58 8 16 8 L38 8" strokeDasharray="2 3" />
         <circle cx="16" cy="16" r="3" fill="currentColor" fillOpacity="0.4" />
       </svg>
-    </div>
-  );
-};
-
-/* DYNAMIC TEMPLE GATE FRAME (MANDIR DWAR / TORAN WITH SCROLL PHYSICS) */
-const TempleGateFrame = ({ scrollYProgress }) => {
-  const pillarProgress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const bellSwingLeft = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, -12, 10, -8, 0]);
-  const bellSwingRight = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 12, -10, 8, 0]);
-  const plaqueGlow = useTransform(scrollYProgress, [0, 0.5, 1], [0.5, 0.95, 0.7]);
-  const frameAccentColor = useTransform(
-    scrollYProgress,
-    [0, 0.35, 0.75, 1],
-    ["#D97706", "#BE123C", "#831828", "#D97706"]
-  );
-
-  return (
-    <div className="fixed inset-1.5 sm:inset-3 pointer-events-none z-30 select-none">
-      {/* OUTER BASE TEMPLE RECTANGLE WITH ARCH BRACKETS */}
-      <motion.div 
-        className="absolute inset-0 border border-amber-600/30 rounded-2xl"
-        style={{ borderColor: frameAccentColor }}
-      />
-      <div className="absolute inset-1 sm:inset-1.5 border border-amber-500/15 rounded-xl" />
-
-      {/* LEFT & RIGHT TEMPLE PILLARS (STAMBHA) WITH PROGRESS TRACER */}
-      <div className="absolute top-12 bottom-10 left-0 w-[3px] bg-amber-500/10 rounded-full overflow-hidden">
-        <motion.div 
-          className="w-full bg-gradient-to-b from-amber-400 via-rose-500 to-amber-600 shadow-[0_0_8px_rgba(245,158,11,0.8)]"
-          style={{ height: pillarProgress }}
-        />
-      </div>
-      <div className="absolute top-12 bottom-10 right-0 w-[3px] bg-amber-500/10 rounded-full overflow-hidden">
-        <motion.div 
-          className="w-full bg-gradient-to-b from-amber-400 via-rose-500 to-amber-600 shadow-[0_0_8px_rgba(245,158,11,0.8)]"
-          style={{ height: pillarProgress }}
-        />
-      </div>
-
-      {/* CORNER TEMPLE BRACKETS (TORAN CORBELS) */}
-      <div className="absolute top-2 left-2 w-6 h-6 text-amber-600/60 pointer-events-none">
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M2 30 V8 C2 4.6 4.6 2 8 2 H30" />
-          <path d="M6 24 C6 14 14 6 24 6" strokeDasharray="2 2" />
-          <circle cx="10" cy="10" r="2.5" fill="currentColor" fillOpacity="0.5" />
-        </svg>
-      </div>
-      <div className="absolute top-2 right-2 w-6 h-6 text-amber-600/60 pointer-events-none -scale-x-100">
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M2 30 V8 C2 4.6 4.6 2 8 2 H30" />
-          <path d="M6 24 C6 14 14 6 24 6" strokeDasharray="2 2" />
-          <circle cx="10" cy="10" r="2.5" fill="currentColor" fillOpacity="0.5" />
-        </svg>
-      </div>
-
-      {/* TOP TEMPLE GATE / MANDIR CUSPED ARCH (TORAN DWAR) */}
-      <div className="absolute -top-1.5 sm:-top-2 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none w-full max-w-xl px-4">
-        {/* Temple Shikhara Kalash Finial */}
-        <svg viewBox="0 0 60 26" className="w-12 sm:w-14 h-6 drop-shadow-xs" fill="none">
-          <path d="M30 2 L33 9 L30 11 L27 9 Z" fill="#DC2626" stroke="#991B1B" strokeWidth="0.8" />
-          <circle cx="30" cy="2" r="1.5" fill="#FBBF24" />
-          {/* Mango Leaves & Purna Kalash */}
-          <path d="M22 14 C25 10 30 10 30 14 C30 10 35 10 38 14 Z" fill="#059669" />
-          <path d="M24 14 C24 14 26 22 30 22 C34 22 36 14 36 14 Z" fill="#F59E0B" stroke="#B45309" strokeWidth="1" />
-          <ellipse cx="30" cy="14" rx="7" ry="2" fill="#FEF3C7" stroke="#B45309" strokeWidth="0.8" />
-        </svg>
-
-        {/* Main Cusped Gateway Arch Body */}
-        <div className="relative flex items-center justify-center w-full">
-          {/* Left Wing Beam with Scallops */}
-          <div className="flex-1 flex items-center">
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-500/50 to-amber-600" />
-            <div className="hidden sm:block w-3 h-3 rotate-45 border-t-2 border-r-2 border-amber-600 -mr-1.5" />
-          </div>
-
-          {/* Hanging Left Temple Bell */}
-          <motion.div 
-            className="shrink-0 -mb-5 mr-1"
-            style={{ transformOrigin: "top center", rotate: bellSwingLeft }}
-          >
-            <svg viewBox="0 0 18 26" className="w-3.5 sm:w-4 h-5 drop-shadow-xs" fill="none">
-              <line x1="9" y1="0" x2="9" y2="8" stroke="#B45309" strokeWidth="1.2" strokeDasharray="1.5 1.5" />
-              <path d="M9 8 C7 8 5.5 10 5.5 14 C5.5 17 4 19 4 19 L14 19 C14 19 12.5 17 12.5 14 C12.5 10 11 8 9 8 Z" fill="#F59E0B" stroke="#92400E" strokeWidth="0.8" />
-              <circle cx="9" cy="21" r="1.5" fill="#DC2626" />
-            </svg>
-          </motion.div>
-
-          {/* Central Sanctum Toran Plaque */}
-          <motion.div 
-            className="relative px-3 sm:px-4 py-1 bg-[#FFFDF9] border border-amber-500/70 rounded-full shadow-md flex items-center gap-1.5 sm:gap-2 mx-1"
-            style={{
-              boxShadow: useTransform(plaqueGlow, (v) => `0 0 ${v * 16}px rgba(245, 158, 11, ${v * 0.6})`)
-            }}
-          >
-            <span className="w-1.5 h-1.5 rotate-45 bg-amber-600 shrink-0" />
-            <span className="text-[10px] sm:text-[11px] tracking-[0.22em] text-[#831828] font-bold font-serif uppercase whitespace-nowrap">
-              ✦ शुभ विवाह ✦
-            </span>
-            <span className="w-1.5 h-1.5 rotate-45 bg-amber-600 shrink-0" />
-          </motion.div>
-
-          {/* Hanging Right Temple Bell */}
-          <motion.div 
-            className="shrink-0 -mb-5 ml-1"
-            style={{ transformOrigin: "top center", rotate: bellSwingRight }}
-          >
-            <svg viewBox="0 0 18 26" className="w-3.5 sm:w-4 h-5 drop-shadow-xs" fill="none">
-              <line x1="9" y1="0" x2="9" y2="8" stroke="#B45309" strokeWidth="1.2" strokeDasharray="1.5 1.5" />
-              <path d="M9 8 C7 8 5.5 10 5.5 14 C5.5 17 4 19 4 19 L14 19 C14 19 12.5 17 12.5 14 C12.5 10 11 8 9 8 Z" fill="#F59E0B" stroke="#92400E" strokeWidth="0.8" />
-              <circle cx="9" cy="21" r="1.5" fill="#DC2626" />
-            </svg>
-          </motion.div>
-
-          {/* Right Wing Beam with Scallops */}
-          <div className="flex-1 flex items-center">
-            <div className="hidden sm:block w-3 h-3 rotate-45 border-b-2 border-l-2 border-amber-600 -ml-1.5" />
-            <div className="h-[2px] w-full bg-gradient-to-l from-transparent via-amber-500/50 to-amber-600" />
-          </div>
-        </div>
-      </div>
-
-      {/* BOTTOM THRESHOLD (MANDIR DEHLEEJ & LOTUS PEETHIKA) */}
-      <div className="absolute -bottom-1 sm:-bottom-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center w-full max-w-sm px-6">
-        <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-amber-500/40 to-amber-600" />
-        {/* Auspicious Center Lotus Bloom */}
-        <div className="mx-2 px-2 py-0.5 bg-[#FAF6EE] border border-amber-500/40 rounded-full flex items-center gap-1 shadow-xs">
-          <svg viewBox="0 0 24 16" className="w-4 h-3 text-amber-700" fill="currentColor">
-            <path d="M12 2 C10 6 6 8 4 14 C8 14 10 11 12 8 C14 11 16 14 20 14 C18 8 14 6 12 2 Z" opacity="0.85" />
-            <circle cx="12" cy="12" r="1.5" fill="#DC2626" />
-          </svg>
-          <span className="text-[8px] font-sans tracking-widest text-amber-900 font-bold uppercase hidden sm:inline">
-            मंगलम्
-          </span>
-        </div>
-        <div className="h-[2px] flex-1 bg-gradient-to-l from-transparent via-amber-500/40 to-amber-600" />
-      </div>
     </div>
   );
 };
@@ -1152,8 +1016,6 @@ export default function WeddingInvite() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [copiedShare, setCopiedShare] = useState(false);
   const audioRef = useRef(null);
-  const { scrollYProgress } = useScroll();
-
   const [activeDayFilter, setActiveDayFilter] = useState('all');
   const defaultFallbackImage = "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=2000&q=80";
   const [heroImageSrc, setHeroImageSrc] = useState('/IMG-20260925-WA0003~2.jpg');
@@ -1276,8 +1138,29 @@ export default function WeddingInvite() {
       {/* CELEBRATORY FALLING ROSE PETALS / MARIGOLDS */}
       {isMounted && showPetals && <FloatingPetals />}
 
-      {/* DYNAMIC TEMPLE GATE FRAME WITH PROGRESS & SWINGING BELLS */}
-      <TempleGateFrame scrollYProgress={scrollYProgress} />
+      {/* CEREMONIAL ARCHED GATE FRAME WITH MULTI-LAYERED LINES */}
+      <div className="fixed inset-2 sm:inset-3 pointer-events-none z-30">
+        {/* Outer Gate Frame Line */}
+        <div className="absolute inset-0 border-2 border-amber-600/35 rounded-2xl" />
+        {/* Inner Gate Frame Line */}
+        <div className="absolute inset-1.5 sm:inset-2 border border-amber-500/25 rounded-xl" />
+        
+        {/* Gate Toran Arch Header Emblem */}
+        <div className="absolute -top-1 left-1/2 -translate-x-1/2 flex items-center justify-center">
+          <div className="h-[2px] w-12 sm:w-28 bg-gradient-to-r from-transparent via-amber-500/60 to-amber-600" />
+          <div className="px-3 py-0.5 bg-[#FAF6EE] border border-amber-500/50 rounded-full shadow-xs text-amber-800 text-[10px] tracking-widest uppercase font-serif">
+            ✦ शुभ विवाह ✦
+          </div>
+          <div className="h-[2px] w-12 sm:w-28 bg-gradient-to-l from-transparent via-amber-500/60 to-amber-600" />
+        </div>
+        
+        {/* Gate Bottom Arch Accent */}
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 flex items-center justify-center">
+          <div className="h-[2px] w-16 sm:w-24 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+          <span className="w-1.5 h-1.5 rotate-45 bg-amber-600/60 mx-2" />
+          <div className="h-[2px] w-16 sm:w-24 bg-gradient-to-l from-transparent via-amber-500/50 to-transparent" />
+        </div>
+      </div>
 
       {/* INTERACTIVE ROYAL ENVELOPE / GREETING CARD MODAL */}
       {!isInvitationOpened && (
