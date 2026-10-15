@@ -3,6 +3,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 
+const isServerless = Boolean(
+  process.env.VERCEL ||
+  process.env.AWS_LAMBDA_FUNCTION_NAME ||
+  process.env.LAMBDA_TASK_ROOT ||
+  process.cwd().startsWith('/var/task')
+);
+
 const PRIMARY_DIR = path.join(process.cwd(), 'data');
 const FALLBACK_DIR = path.join(os.tmpdir(), 'wedding-rsvp-data');
 
@@ -21,17 +28,16 @@ async function readListFromFile(filePath) {
 }
 
 async function getStoredRSVPs() {
-  const primary = await readListFromFile(path.join(PRIMARY_DIR, 'rsvps.json'));
-  if (primary !== null) return primary;
-
-  const fallback = await readListFromFile(path.join(FALLBACK_DIR, 'rsvps.json'));
-  if (fallback !== null) return fallback;
-
+  const dirsToTry = isServerless ? [FALLBACK_DIR] : [PRIMARY_DIR, FALLBACK_DIR];
+  for (const dir of dirsToTry) {
+    const data = await readListFromFile(path.join(dir, 'rsvps.json'));
+    if (data !== null) return data;
+  }
   return [];
 }
 
 async function saveRSVPList(list) {
-  const dirsToTry = [PRIMARY_DIR, FALLBACK_DIR];
+  const dirsToTry = isServerless ? [FALLBACK_DIR] : [PRIMARY_DIR, FALLBACK_DIR];
   for (const dir of dirsToTry) {
     try {
       await fs.mkdir(dir, { recursive: true });
@@ -126,12 +132,20 @@ export async function POST(request) {
     // Sync with Google Sheets / Webhook if configured
     const googleSheetUrl = process.env.GOOGLE_SHEET_URL || process.env.RSVP_WEBHOOK_URL || process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
     if (googleSheetUrl && typeof googleSheetUrl === 'string' && googleSheetUrl.startsWith('http')) {
-      fetch(googleSheetUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: isUpdate ? 'update' : 'create', ...savedEntry }),
-        redirect: 'follow',
-      }).catch((err) => console.error('Google Sheets sync error:', err));
+      try {
+        const sheetRes = await fetch(googleSheetUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: isUpdate ? 'update' : 'create', ...savedEntry }),
+          redirect: 'follow',
+        });
+        const sheetResponseText = await sheetRes.text();
+        console.log('Google Sheets sync response:', sheetResponseText);
+      } catch (err) {
+        console.error('Google Sheets sync error:', err);
+      }
+    } else {
+      console.warn('RSVP saved, but GOOGLE_SHEET_URL is not set or invalid:', googleSheetUrl);
     }
 
     return NextResponse.json({ success: true, updated: isUpdate, data: savedEntry }, { status: isUpdate ? 200 : 201 });
