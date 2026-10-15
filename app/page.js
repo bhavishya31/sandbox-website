@@ -43,14 +43,14 @@ const FloatingPetals = () => (
     {PETAL_PRESETS.map((p, idx) => (
       <motion.div
         key={idx}
-        className="absolute top-[-20px] rounded-full opacity-65"
+        className="absolute top-[-20px] rounded-full opacity-65 transform-gpu pointer-events-none"
         style={{
           left: p.left,
           width: p.size,
           height: p.size * 1.35,
           backgroundColor: p.color,
           borderRadius: "60% 40% 70% 30% / 50% 60% 40% 50%",
-          filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.06))",
+          willChange: "transform, opacity",
         }}
         animate={{
           y: ["0vh", "105vh"],
@@ -97,12 +97,12 @@ const LordGaneshaLogo = ({ className = "w-14 h-14" }) => (
 /* ROYAL BRIDE & GROOM EMBLEM LOGO (PERFECTLY FITTED & ANIMATED) */
 const BrideGroomLogo = ({ className = "w-40 h-40 sm:w-48 sm:h-48" }) => (
   <motion.div 
-    className={`relative inline-flex items-center justify-center select-none ${className}`}
+    className={`relative inline-flex items-center justify-center select-none transform-gpu ${className}`}
     animate={{ y: [0, -4, 0] }}
     transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
     whileHover={{ scale: 1.06 }}
   >
-    <svg viewBox="0 0 120 120" className="w-full h-full drop-shadow-lg overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 120 120" className="w-full h-full overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
       {/* Outer Golden Aura Backdrop */}
       <circle cx="60" cy="60" r="57" fill="#FFFDF8" stroke="#D97706" strokeWidth="1.8" />
       
@@ -226,7 +226,7 @@ const BandBaajaSticker = ({ className = "w-16 h-16", showLabel = false, onBeatCl
       whileHover={{ scale: 1.15, rotate: 6 }}
       whileTap={{ scale: 0.92, rotate: -6 }}
       onClick={onBeatClick}
-      className={`relative inline-flex flex-col items-center select-none cursor-pointer group ${className}`}
+      className={`relative inline-flex flex-col items-center select-none cursor-pointer group transform-gpu ${className}`}
       title="Tap for festive wedding dhol beat!"
     >
       <motion.div
@@ -241,7 +241,7 @@ const BandBaajaSticker = ({ className = "w-16 h-16", showLabel = false, onBeatCl
         }}
         className="w-full h-full"
       >
-        <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Decorative Golden Sunburst / Rosette Backdrop */}
           <circle cx="50" cy="50" r="45" fill="#FFFBEB" stroke="#F59E0B" strokeWidth="1.8" strokeDasharray="3 3" />
           <circle cx="50" cy="50" r="40" fill="#FEF3C7" opacity="0.65" />
@@ -719,10 +719,10 @@ const DancerOnDholak = ({ className = "w-28 h-32", onBeatClick }) => (
     whileHover={{ scale: 1.08 }}
     whileTap={{ scale: 0.94 }}
     onClick={onBeatClick}
-    className={`relative inline-flex items-center justify-center select-none cursor-pointer group ${className}`}
+    className={`relative inline-flex items-center justify-center select-none cursor-pointer group transform-gpu ${className}`}
     title="Tap to watch the Baraati dance on Dholak beats!"
   >
-    <svg viewBox="0 0 140 160" className="w-full h-full drop-shadow-md overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 140 160" className="w-full h-full overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
       {/* Sound Beat Waves Radiating From Drum Sides */}
       <motion.g
         animate={{
@@ -1132,8 +1132,7 @@ export default function WeddingInvite() {
           radial-gradient(circle at top right, rgba(217, 119, 6, 0.05), transparent 45%),
           radial-gradient(circle at bottom left, rgba(180, 83, 9, 0.05), transparent 45%),
           url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C59B27' fill-opacity='0.04' fill-rule='evenodd'%3E%3Cpath d='M40 0 C45 15 65 15 70 0 C80 20 60 40 40 40 C20 40 0 20 10 0 C15 15 35 15 40 0 Z'/%3E%3Cpath d='M40 80 C45 65 65 65 70 80 C80 60 60 40 40 40 C20 40 0 60 10 80 C15 65 35 65 40 80 Z'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3Ccircle cx='40' cy='40' r='8' stroke='%23D97706' stroke-opacity='0.05' fill='none'/%3E%3Ccircle cx='0' cy='40' r='3'/%3E%3Ccircle cx='80' cy='40' r='3'/%3E%3C/g%3E%3C/svg%3E")
-        `,
-        backgroundAttachment: 'fixed'
+        `
       }}
     >
       {/* CELEBRATORY FALLING ROSE PETALS / MARIGOLDS */}
@@ -1314,6 +1313,8 @@ export default function WeddingInvite() {
             alt="Bhavna & Devansh" 
             className="w-full h-full object-cover object-center filter brightness-[0.88] scale-105 transition-transform duration-1000"
             onError={handleImageFallback}
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6EE]/85 via-[#FAF6EE]/60 to-[#FAF6EE]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(254,249,235,0.7)_0%,transparent_80%)] pointer-events-none" />
@@ -1407,7 +1408,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* COUNTDOWN TIMER */}
-      <section id="countdown" className="py-14 sm:py-20 bg-[#FDFBF7]/85 backdrop-blur-sm border-y border-amber-200/60">
+      <section id="countdown" className="py-14 sm:py-20 bg-[#FDFBF7]/95 border-y border-amber-200/60">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp} className="max-w-3xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-3 md:gap-5 mb-3">
             <BandBaajaSticker className="w-9 h-9 md:w-11 md:h-11 -rotate-12" onBeatClick={triggerDholBurst} />
@@ -1456,7 +1457,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* THE CELEBRATIONS TIMELINE */}
-      <section className="py-24 bg-[#F5EEDB]/75 backdrop-blur-sm border-t border-amber-200/70">
+      <section className="py-24 bg-[#F5EEDB]/90 border-t border-amber-200/70">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="text-xs font-sans tracking-[0.3em] text-[#831828] uppercase block font-semibold mb-2">Itinerary &amp; Events</span>
@@ -1581,7 +1582,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* THE VENUE MAP */}
-      <section className="py-24 bg-[#FDFBF7]/80 backdrop-blur-sm border-t border-amber-200/60">
+      <section className="py-24 bg-[#FDFBF7]/90 border-t border-amber-200/60">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="max-w-3xl mx-auto px-6 text-center">
           <MapPin className="mx-auto text-rose-400 mb-4" size={32} />
           <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-800 uppercase mb-3">The Venue</h2>
@@ -1635,7 +1636,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* STAY & GUEST ASSISTANCE */}
-      <section className="py-16 bg-[#F5ECDC]/85 backdrop-blur-sm border-t border-amber-200/60">
+      <section className="py-16 bg-[#F5ECDC]/90 border-t border-amber-200/60">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h3 className="text-lg font-medium text-gray-800 mb-2">Need Help or Directions?</h3>
           <p className="text-stone-500 font-sans text-xs md:text-sm mb-6">
@@ -1656,7 +1657,7 @@ export default function WeddingInvite() {
 
       {/* RSVP FORM */}
       <section id="rsvp" className="py-24 max-w-2xl mx-auto px-6">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="bg-[#FFFDF9]/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 md:p-12 shadow-md border border-amber-200/80 text-center">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="bg-[#FFFDF9]/95 rounded-3xl p-6 sm:p-8 md:p-12 shadow-md border border-amber-200/80 text-center">
           <Heart className="mx-auto text-rose-300 mb-4 fill-rose-100" size={28} />
           <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-800 uppercase mb-2">Will You Attend?</h2>
           <p className="text-sm text-gray-500 font-sans mb-8">Kindly RSVP so we can prepare for your arrival</p>
