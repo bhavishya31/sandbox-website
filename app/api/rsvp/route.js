@@ -77,13 +77,27 @@ export async function POST(request) {
     const cleanName = (name || '').trim();
     const cleanPhone = (phone || '').trim();
 
-    if (!cleanName) {
-      return NextResponse.json({ success: false, error: 'Name is required' }, { status: 400 });
+    if (!cleanName || cleanName.length < 2) {
+      return NextResponse.json({ success: false, error: 'Name must be at least 2 characters.' }, { status: 400 });
     }
+    if (cleanName.length > 80) {
+      return NextResponse.json({ success: false, error: 'Name cannot exceed 80 characters.' }, { status: 400 });
+    }
+    if (!/[a-zA-Z\u0900-\u097F]/.test(cleanName)) {
+      return NextResponse.json({ success: false, error: 'Name must contain valid letters.' }, { status: 400 });
+    }
+
+    const normalizedPhone = cleanPhone.replace(/\D/g, '');
+    if (!cleanPhone || normalizedPhone.length < 10 || normalizedPhone.length > 15) {
+      return NextResponse.json({ success: false, error: 'A valid 10 to 15 digit phone number is required.' }, { status: 400 });
+    }
+
+    const validStatus = status === 'declining' ? 'declining' : 'attending';
+    const validGuests = validStatus === 'attending' ? Math.min(Math.max(Number(guests) || 1, 1), 6) : 0;
+    const cleanMessage = (message || '').trim().slice(0, 500);
 
     const currentList = await getStoredRSVPs();
     const normalizedName = cleanName.toLowerCase();
-    const normalizedPhone = cleanPhone.replace(/\D/g, '');
 
     // Find existing entry by matching name and phone
     const existingIndex = currentList.findIndex((item) => {
@@ -105,10 +119,10 @@ export async function POST(request) {
         ...currentList[existingIndex],
         name: cleanName,
         phone: cleanPhone,
-        status: status || 'attending',
-        guests: status === 'attending' ? Number(guests) || 1 : 0,
+        status: validStatus,
+        guests: validGuests,
         attendingEvents: attendingEvents || ['all'],
-        message: (message || '').trim(),
+        message: cleanMessage,
         updatedAt: new Date().toISOString(),
       };
       currentList[existingIndex] = savedEntry;
@@ -118,10 +132,10 @@ export async function POST(request) {
         id: Date.now().toString(36) + Math.random().toString(36).substring(2, 7),
         name: cleanName,
         phone: cleanPhone,
-        status: status || 'attending',
-        guests: status === 'attending' ? Number(guests) || 1 : 0,
+        status: validStatus,
+        guests: validGuests,
         attendingEvents: attendingEvents || ['all'],
-        message: (message || '').trim(),
+        message: cleanMessage,
         createdAt: new Date().toISOString(),
       };
       currentList.push(savedEntry);
