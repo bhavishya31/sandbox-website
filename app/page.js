@@ -1082,23 +1082,21 @@ export default function WeddingInvite() {
   const handleRSVP = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
-    if (!endpoint) {
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSubmitted(true);
-      }, 600);
-      return;
-    }
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch('/api/rsvp', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      if (response.ok) setSubmitted(true);
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        alert(errorData.error || 'Failed to submit RSVP. Please try again.');
+      }
     } catch (error) {
       console.error(error);
+      alert('Unable to submit RSVP. Please check your connection or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
