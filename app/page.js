@@ -1013,6 +1013,7 @@ export default function WeddingInvite() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [copiedShare, setCopiedShare] = useState(false);
   const audioRef = useRef(null);
@@ -1079,8 +1080,41 @@ export default function WeddingInvite() {
     setShowPetals(true);
   };
 
+  const validateForm = () => {
+    const errs = {};
+    const trimmedName = (formData.name || '').trim();
+    if (!trimmedName) {
+      errs.name = 'Please enter your full name.';
+    } else if (trimmedName.length < 2) {
+      errs.name = 'Name must be at least 2 characters.';
+    } else if (trimmedName.length > 80) {
+      errs.name = 'Name cannot exceed 80 characters.';
+    } else if (!/[a-zA-Z\u0900-\u097F]/.test(trimmedName)) {
+      errs.name = 'Please enter a valid name containing letters.';
+    }
+
+    const trimmedPhone = (formData.phone || '').trim();
+    const digitsOnly = trimmedPhone.replace(/\D/g, '');
+    if (!trimmedPhone) {
+      errs.phone = 'Please enter your phone or WhatsApp number.';
+    } else if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+      errs.phone = 'Please enter a valid 10-digit phone number.';
+    }
+
+    if (formData.status === 'attending') {
+      const guestCount = Number(formData.guests);
+      if (!guestCount || guestCount < 1 || guestCount > 6) {
+        errs.guests = 'Please select a valid number of guests (1–6).';
+      }
+    }
+
+    setFormErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
   const handleRSVP = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/rsvp', {
@@ -1673,29 +1707,42 @@ export default function WeddingInvite() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleRSVP} className="space-y-6 text-left font-sans text-sm">
+            <form onSubmit={handleRSVP} noValidate className="space-y-6 text-left font-sans text-sm">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Your Full Name *</label>
                   <input
                     type="text"
                     required
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
+                    className={`w-full bg-stone-50 border rounded-xl px-4 py-3 focus:outline-none focus:bg-white transition-colors ${
+                      formErrors.name ? 'border-red-500 ring-1 ring-red-400' : 'border-stone-200 focus:border-rose-400'
+                    }`}
                     placeholder="e.g. John Doe"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                      if (formErrors.name) setFormErrors((prev) => ({ ...prev, name: undefined }));
+                    }}
                   />
+                  {formErrors.name && <p className="text-red-600 text-xs mt-1.5 font-medium">{formErrors.name}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Phone / WhatsApp</label>
+                  <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Phone / WhatsApp *</label>
                   <input
                     type="tel"
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
+                    required
+                    className={`w-full bg-stone-50 border rounded-xl px-4 py-3 focus:outline-none focus:bg-white transition-colors ${
+                      formErrors.phone ? 'border-red-500 ring-1 ring-red-400' : 'border-stone-200 focus:border-rose-400'
+                    }`}
                     placeholder="+91 98765 43210"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                      if (formErrors.phone) setFormErrors((prev) => ({ ...prev, phone: undefined }));
+                    }}
                   />
+                  {formErrors.phone && <p className="text-red-600 text-xs mt-1.5 font-medium">{formErrors.phone}</p>}
                 </div>
               </div>
 
@@ -1757,10 +1804,14 @@ export default function WeddingInvite() {
               )}
 
               <div>
-                <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Warm Wishes &amp; Blessings</label>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="block text-gray-700 font-medium text-xs uppercase tracking-wider">Warm Wishes &amp; Blessings</label>
+                  <span className="text-[11px] text-stone-400">{formData.message.length}/500</span>
+                </div>
                 <textarea
                   rows="3"
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white resize-none"
+                  maxLength={500}
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white resize-none transition-colors"
                   placeholder="Leave a message for Bhavna & Devansh..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
