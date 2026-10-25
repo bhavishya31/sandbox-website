@@ -219,64 +219,6 @@ const BrideGroomLogo = ({ className = "w-40 h-40 sm:w-48 sm:h-48" }) => (
   </motion.div>
 );
 
-/* SACRED SHIV-PARVATI HASTAMELAP & TRISHUL MOTIF (DIVINE UNION) */
-const ShivParvatiTrishulMotif = ({ className = "w-24 h-24" }) => (
-  <motion.div
-    className={`relative inline-flex items-center justify-center select-none ${className}`}
-    animate={{ y: [0, -3, 0] }}
-    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-  >
-    <svg viewBox="0 0 120 120" className="w-full h-full drop-shadow-md overflow-visible" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Sacred Golden Halo */}
-      <circle cx="60" cy="60" r="54" stroke="#D97706" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.75" />
-      <circle cx="60" cy="60" r="48" fill="#FFFBEB" stroke="#F59E0B" strokeWidth="1" opacity="0.85" />
-
-      {/* Divine Crescent Moon (Chandra) atop Shiva */}
-      <path d="M 52 14 A 10 10 0 0 0 62 26 A 11 11 0 0 1 54 13 Z" fill="#FDE68A" stroke="#B45309" strokeWidth="0.8" />
-
-      {/* Auspicious Trishul (Trident) */}
-      <path d="M 60 10 L 60 108" stroke="#D97706" strokeWidth="2.6" strokeLinecap="round" />
-      {/* Center Spearhead */}
-      <path d="M 57 24 L 60 10 L 63 24 Z" fill="#F59E0B" stroke="#B45309" strokeWidth="1" />
-      {/* Left Prong */}
-      <path d="M 46 22 C 46 34 58 35 60 35" stroke="#F59E0B" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-      <path d="M 44 23 L 46 16 L 49 23 Z" fill="#F59E0B" stroke="#B45309" strokeWidth="0.8" />
-      {/* Right Prong */}
-      <path d="M 74 22 C 74 34 62 35 60 35" stroke="#F59E0B" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-      <path d="M 71 23 L 74 16 L 76 23 Z" fill="#F59E0B" stroke="#B45309" strokeWidth="0.8" />
-
-      {/* Damru tied to Trishul */}
-      <path d="M 53 40 L 67 40 L 55 49 L 67 49 Z" fill="#831828" stroke="#78350F" strokeWidth="1" />
-      <circle cx="60" cy="44.5" r="1.5" fill="#FDE047" />
-
-      {/* Lord Shiva's Hand (Left) with Rudraksha Bracelet */}
-      <path d="M 28 72 C 34 68 45 68 56 64" stroke="#0284C7" strokeWidth="3.8" strokeLinecap="round" />
-      <circle cx="36" cy="70" r="2.2" fill="#78350F" stroke="#F59E0B" strokeWidth="0.8" />
-      <circle cx="40" cy="69" r="2.2" fill="#78350F" stroke="#F59E0B" strokeWidth="0.8" />
-
-      {/* Goddess Parvati's Hand (Right) with Sacred Red Chooda Bangles */}
-      <path d="M 92 72 C 86 68 75 68 64 64" stroke="#F59E0B" strokeWidth="3.6" strokeLinecap="round" />
-      <circle cx="84" cy="70" r="2.2" fill="#DC2626" />
-      <circle cx="80" cy="69" r="2.2" fill="#DC2626" />
-      <circle cx="76" cy="67" r="2" fill="#10B981" />
-
-      {/* Both Hands Meeting at the Trishul (Hastamelap) */}
-      <motion.g
-        animate={{ scale: [1, 1.12, 1] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "60px 64px" }}
-      >
-        <path d="M 54 62 Q 60 59 66 62 Q 68 66 60 68 Q 52 66 54 62 Z" fill="#DC2626" stroke="#FEF08A" strokeWidth="1.2" />
-        <circle cx="60" cy="64" r="2.2" fill="#FEF08A" />
-      </motion.g>
-
-      {/* Sacred Belpatra Blessings at Base */}
-      <path d="M 52 94 C 44 90 46 82 52 86 C 58 82 60 90 52 94 Z" fill="#047857" stroke="#065F46" strokeWidth="0.8" />
-      <path d="M 68 94 C 60 90 62 82 68 86 C 74 82 76 90 68 94 Z" fill="#047857" stroke="#065F46" strokeWidth="0.8" />
-    </svg>
-  </motion.div>
-);
-
 /* FESTIVE BAND BAAJA STICKER EMBLEM (ANIMATED WITH BEAT BOUNCE & INTERACTIVE TAP) */
 const BandBaajaSticker = ({ className = "w-16 h-16", showLabel = false, onBeatClick }) => {
   return (
@@ -929,7 +871,7 @@ const CELEBRATIONS = [
     events: [
       {
         id: "ganesh-puja",
-        time: "7:00 AM",
+        time: "06:00 AM",
         title: "Ganesh Nimantran",
         tagline: "Auspicious Beginnings",
         attire: "Traditional Yellow / Pavitra Ethnic",
@@ -947,18 +889,6 @@ const CELEBRATIONS = [
     dayKey: "day1",
     events: [
       {
-        id: "mehendi",
-        time: "10:00 AM",
-        title: "Mehendi Ceremony",
-        tagline: "Henna, Folk & Celebrations",
-        attire: "Floral Vibes & Shades of Green",
-        desc: "An afternoon rich with intricate henna designs, soulful folk melodies, sweets, and joyous celebration.",
-        logo: <MehendiIcon />,
-        badgeColor: "bg-emerald-500/10 text-emerald-800 border-emerald-300",
-        ringColor: "ring-emerald-200/80 bg-emerald-50/70",
-        calDates: "20261202T043000Z/20261202T070000Z"
-      },
-      {
         id: "chaak",
         time: "11:00 AM",
         title: "Chaak Ceremony",
@@ -969,7 +899,19 @@ const CELEBRATIONS = [
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
         calDates: "20261202T053000Z/20261202T083000Z"
-      },         
+      },        
+      {
+        id: "mehendi",
+        time: "03:00 PM",
+        title: "Mehendi Ceremony",
+        tagline: "Henna, Folk & Celebrations",
+        attire: "Floral Vibes & Shades of Green",
+        desc: "An afternoon rich with intricate henna designs, soulful folk melodies, sweets, and joyous celebration.",
+        logo: <MehendiIcon />,
+        badgeColor: "bg-emerald-500/10 text-emerald-800 border-emerald-300",
+        ringColor: "ring-emerald-200/80 bg-emerald-50/70",
+        calDates: "20261202T043000Z/20261202T070000Z"
+      },       
     ] 
   },
   {
@@ -1010,7 +952,7 @@ const CELEBRATIONS = [
     events: [
       {
         id: "carnival",
-        time: "10:00 AM",
+        time: "11:00 AM",
         title: "Carnival Dance",
         tagline: "Where Love Meets the Carnival Spirit",
         attire: "Rajasthani Outfit",
@@ -1022,7 +964,7 @@ const CELEBRATIONS = [
       },      
       {
         id: "baraat-swagat",
-        time: "06:00 PM",
+        time: "08:00 PM",
         title: "Baraat Swagat & Dhol Tasha",
         tagline: "Beats, Brass & Grand Welcome",
         attire: "Royal Elegance / Bandhgala & Vibrant Safa",
@@ -1071,7 +1013,6 @@ export default function WeddingInvite() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formErrors, setFormErrors] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [copiedShare, setCopiedShare] = useState(false);
   const audioRef = useRef(null);
@@ -1138,41 +1079,8 @@ export default function WeddingInvite() {
     setShowPetals(true);
   };
 
-  const validateForm = () => {
-    const errs = {};
-    const trimmedName = (formData.name || '').trim();
-    if (!trimmedName) {
-      errs.name = 'Please enter your full name.';
-    } else if (trimmedName.length < 2) {
-      errs.name = 'Name must be at least 2 characters.';
-    } else if (trimmedName.length > 80) {
-      errs.name = 'Name cannot exceed 80 characters.';
-    } else if (!/[a-zA-Z\u0900-\u097F]/.test(trimmedName)) {
-      errs.name = 'Please enter a valid name containing letters.';
-    }
-
-    const trimmedPhone = (formData.phone || '').trim();
-    const digitsOnly = trimmedPhone.replace(/\D/g, '');
-    if (!trimmedPhone) {
-      errs.phone = 'Please enter your phone or WhatsApp number.';
-    } else if (digitsOnly.length < 10 || digitsOnly.length > 15) {
-      errs.phone = 'Please enter a valid 10-digit phone number.';
-    }
-
-    if (formData.status === 'attending') {
-      const guestCount = Number(formData.guests);
-      if (!guestCount || guestCount < 1 || guestCount > 6) {
-        errs.guests = 'Please select a valid number of guests (1–6).';
-      }
-    }
-
-    setFormErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
   const handleRSVP = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/rsvp', {
@@ -1225,22 +1133,6 @@ export default function WeddingInvite() {
         `
       }}
     >
-      {/* DIVINE SHIV-PARVATI SACRED UNION BACKGROUND VIDEO (AUTOPLAY, MUTED, SCROLLING BACKDROP) */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover filter brightness-[0.88] contrast-105 opacity-30 transform-gpu"
-        >
-          <source src="/shiva-parvati-bg.mp4" type="video/mp4" />
-        </video>
-        {/* Soft Sacred Aura & Radiant Vignette to guarantee pristine text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6EE]/75 via-[#FAF6EE]/55 to-[#FAF6EE]/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,#FAF6EE_92%)] opacity-75" />
-      </div>
-
       {/* CELEBRATORY FALLING ROSE PETALS / MARIGOLDS */}
       {isMounted && showPetals && <FloatingPetals />}
 
@@ -1323,7 +1215,10 @@ export default function WeddingInvite() {
                       <Heart className="w-8 h-8 fill-white/90 animate-pulse text-white drop-shadow-md" />
                     </div>
                   </div>
-                  <span className="mt-3 text-xs font-sans tracking-[0.25em] text-[#831828] uppercase font-semibold group-hover:text-amber-700">
+                  <span className="mt-3 text-xs font-sans tracking-[0.25em] text-[#831828] uppercase font-bold group-hover:text-amber-700">
+                    Tap to Open
+                  </span>
+                  <span className="mt-1 text-[11px] font-sans tracking-[0.2em] text-stone-500 uppercase font-medium">
                     Khamma Ghani • Open Invitation ❦
                   </span>
                 </button>
@@ -1444,13 +1339,6 @@ export default function WeddingInvite() {
           <span className="text-xs md:text-sm font-sans tracking-[0.35em] text-[#831828] uppercase block font-bold">
             ॥ श्री गणेशाय नमः ॥
           </span>
-          <div className="flex items-center justify-center gap-3">
-            <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-amber-500/60" />
-            <span className="text-[11px] sm:text-xs font-serif italic text-amber-900 tracking-wider">
-              ॥ कर्पूरगौरं करुणावतारं • भवं भवानीसहितं नमामि ॥
-            </span>
-            <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-amber-500/60" />
-          </div>
 
           <div className="w-16 h-[1.5px] bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto" />
 
@@ -1521,7 +1409,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* COUNTDOWN TIMER */}
-      <section id="countdown" className="py-14 sm:py-20 bg-[#FDFBF7]/85 backdrop-blur-[2px] border-y border-amber-200/60 relative z-10">
+      <section id="countdown" className="py-14 sm:py-20 bg-[#FDFBF7]/95 border-y border-amber-200/60">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp} className="max-w-3xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-3 md:gap-5 mb-3">
             <BandBaajaSticker className="w-9 h-9 md:w-11 md:h-11 -rotate-12" onBeatClick={triggerDholBurst} />
@@ -1546,16 +1434,13 @@ export default function WeddingInvite() {
       </section>
 
       {/* OUR STORY & BRIDE-GROOM ANIMATION SECTION */}
-      <section className="py-24 max-w-3xl mx-auto px-6 text-center relative z-10">
+      <section className="py-24 max-w-3xl mx-auto px-6 text-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="space-y-6">
           <div className="flex flex-col items-center justify-center mb-2">
             <div className="flex items-center justify-center gap-3 sm:gap-6">
               <MorPankhMotif className="w-10 h-16 sm:w-14 sm:h-20 -rotate-12 shrink-0" />
               <BrideGroomLogo className="w-40 h-40 sm:w-48 sm:h-48 drop-shadow-lg shrink-0" />
               <MorPankhMotif className="w-10 h-16 sm:w-14 sm:h-20 rotate-12 scale-x-[-1] shrink-0" />
-            </div>
-            <div className="my-3 flex items-center justify-center gap-2">
-              <ShivParvatiTrishulMotif className="w-20 h-20" />
             </div>
             <span className="text-[11px] font-sans text-amber-700 tracking-widest uppercase mt-2 font-semibold">
               ❦ Bride Bhavna &amp; Groom Devansh ❦
@@ -1573,7 +1458,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* THE CELEBRATIONS TIMELINE */}
-      <section className="py-24 bg-[#F5EEDB]/80 backdrop-blur-[2px] border-t border-amber-200/70 relative z-10">
+      <section className="py-24 bg-[#F5EEDB]/90 border-t border-amber-200/70">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="text-xs font-sans tracking-[0.3em] text-[#831828] uppercase block font-semibold mb-2">Itinerary &amp; Events</span>
@@ -1698,7 +1583,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* THE VENUE MAP */}
-      <section className="py-24 bg-[#FDFBF7]/85 backdrop-blur-[2px] border-t border-amber-200/60 relative z-10">
+      <section className="py-24 bg-[#FDFBF7]/90 border-t border-amber-200/60">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="max-w-3xl mx-auto px-6 text-center">
           <MapPin className="mx-auto text-rose-400 mb-4" size={32} />
           <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-800 uppercase mb-3">The Venue</h2>
@@ -1752,7 +1637,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* STAY & GUEST ASSISTANCE */}
-      <section className="py-16 bg-[#F5ECDC]/85 backdrop-blur-[2px] border-t border-amber-200/60 relative z-10">
+      <section className="py-16 bg-[#F5ECDC]/90 border-t border-amber-200/60">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h3 className="text-lg font-medium text-gray-800 mb-2">Need Help or Directions?</h3>
           <p className="text-stone-500 font-sans text-xs md:text-sm mb-6">
@@ -1772,7 +1657,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* RSVP FORM */}
-      <section id="rsvp" className="py-24 max-w-2xl mx-auto px-6 relative z-10">
+      <section id="rsvp" className="py-24 max-w-2xl mx-auto px-6">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="bg-[#FFFDF9]/95 rounded-3xl p-6 sm:p-8 md:p-12 shadow-md border border-amber-200/80 text-center">
           <Heart className="mx-auto text-rose-300 mb-4 fill-rose-100" size={28} />
           <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-800 uppercase mb-2">Will You Attend?</h2>
@@ -1791,42 +1676,29 @@ export default function WeddingInvite() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleRSVP} noValidate className="space-y-6 text-left font-sans text-sm">
+            <form onSubmit={handleRSVP} className="space-y-6 text-left font-sans text-sm">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Your Full Name *</label>
                   <input
                     type="text"
                     required
-                    className={`w-full bg-stone-50 border rounded-xl px-4 py-3 focus:outline-none focus:bg-white transition-colors ${
-                      formErrors.name ? 'border-red-500 ring-1 ring-red-400' : 'border-stone-200 focus:border-rose-400'
-                    }`}
+                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
                     placeholder="e.g. John Doe"
                     value={formData.name}
-                    onChange={(e) => {
-                      setFormData({ ...formData, name: e.target.value });
-                      if (formErrors.name) setFormErrors((prev) => ({ ...prev, name: undefined }));
-                    }}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
-                  {formErrors.name && <p className="text-red-600 text-xs mt-1.5 font-medium">{formErrors.name}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Phone / WhatsApp *</label>
+                  <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Phone / WhatsApp</label>
                   <input
                     type="tel"
-                    required
-                    className={`w-full bg-stone-50 border rounded-xl px-4 py-3 focus:outline-none focus:bg-white transition-colors ${
-                      formErrors.phone ? 'border-red-500 ring-1 ring-red-400' : 'border-stone-200 focus:border-rose-400'
-                    }`}
+                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
                     placeholder="+91 98765 43210"
                     value={formData.phone}
-                    onChange={(e) => {
-                      setFormData({ ...formData, phone: e.target.value });
-                      if (formErrors.phone) setFormErrors((prev) => ({ ...prev, phone: undefined }));
-                    }}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   />
-                  {formErrors.phone && <p className="text-red-600 text-xs mt-1.5 font-medium">{formErrors.phone}</p>}
                 </div>
               </div>
 
@@ -1888,14 +1760,10 @@ export default function WeddingInvite() {
               )}
 
               <div>
-                <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-gray-700 font-medium text-xs uppercase tracking-wider">Warm Wishes &amp; Blessings</label>
-                  <span className="text-[11px] text-stone-400">{formData.message.length}/500</span>
-                </div>
+                <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Warm Wishes &amp; Blessings</label>
                 <textarea
                   rows="3"
-                  maxLength={500}
-                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white resize-none transition-colors"
+                  className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white resize-none"
                   placeholder="Leave a message for Bhavna & Devansh..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -1915,7 +1783,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* CLOSING / THANK YOU & BLESSINGS SECTION (ROYAL JAIPUR MAROON THEME) */}
-      <section className="py-20 bg-[#4a0e17]/95 backdrop-blur-xs text-amber-100 text-center relative overflow-hidden border-t-4 border-amber-400/60 z-10">
+      <section className="py-20 bg-[#4a0e17] text-amber-100 text-center relative overflow-hidden border-t-4 border-amber-400/60">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.18)_0%,transparent_70%)] pointer-events-none" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 space-y-4">
           <div className="flex items-center justify-center gap-3 md:gap-4 text-amber-300/80 mb-2">
@@ -1945,7 +1813,7 @@ export default function WeddingInvite() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-8 bg-[#36080e]/95 text-center text-xs text-amber-200/60 font-sans tracking-widest uppercase border-t border-amber-400/20 relative z-10">
+      <footer className="py-8 bg-[#36080e] text-center text-xs text-amber-200/60 font-sans tracking-widest uppercase border-t border-amber-400/20">
         <p className="mb-2">❤️ DEVKIBHAVNA ❤️</p>
         <p className="text-[11px] text-amber-300/70 tracking-normal font-serif italic normal-case">
           3 – 4 December 2026 • Aura Banquet Hall, Jaipur, Rajasthan
