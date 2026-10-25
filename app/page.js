@@ -1026,6 +1026,16 @@ export default function WeddingInvite() {
     }
   };
 
+  const defaultVenueImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Jaipur%2C_India%2C_Hawa_Mahal_Palace.jpg/1280px-Jaipur%2C_India%2C_Hawa_Mahal_Palace.jpg";
+  const fallbackVenueImage = "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=2000&q=80";
+  const [venueImageSrc, setVenueImageSrc] = useState(defaultVenueImage);
+
+  const handleVenueImageFallback = () => {
+    if (venueImageSrc !== fallbackVenueImage) {
+      setVenueImageSrc(fallbackVenueImage);
+    }
+  };
+
   useEffect(() => {
     setIsMounted(true);
     audioRef.current = new Audio('/Chaand Taare_1.mp3'); 
@@ -1604,8 +1614,23 @@ export default function WeddingInvite() {
       </section>
 
       {/* THE VENUE MAP */}
-      <section className="py-24 bg-[#FDFBF7]/90 border-t border-amber-200/60">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="max-w-3xl mx-auto px-6 text-center">
+      <section className="py-24 relative overflow-hidden border-t border-amber-200/60">
+        {/* HAWA MAHAL BACKGROUND IMAGE & OVERLAYS */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <img
+            src={venueImageSrc}
+            alt="Hawa Mahal Jaipur"
+            className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[0.95] scale-105 transition-transform duration-1000"
+            onError={handleVenueImageFallback}
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-[#FAF6EE]/85 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6EE] via-[#FAF6EE]/75 to-[#FAF6EE]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,253,249,0.65)_0%,transparent_85%)]" />
+        </div>
+
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <MapPin className="mx-auto text-rose-400 mb-4" size={32} />
           <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-800 uppercase mb-3">The Venue</h2>
           <p className="text-xl text-gray-800 font-medium">Aura Banquet Hall</p>
