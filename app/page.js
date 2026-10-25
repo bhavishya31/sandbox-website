@@ -879,7 +879,7 @@ const CELEBRATIONS = [
         logo: <GaneshPujaIcon />,
         badgeColor: "bg-amber-500/10 text-amber-800 border-amber-300",
         ringColor: "ring-amber-200/80 bg-amber-50/70",
-        bgImage: "https://images.unsplash.com/photo-1567591370504-208b8b0e8c89?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261126T013000Z/20261126T033000Z"
       }    
     ] 
@@ -899,7 +899,7 @@ const CELEBRATIONS = [
         logo: <ChaakIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
-        bgImage: "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261202T053000Z/20261202T083000Z"
       },        
       {
@@ -912,7 +912,7 @@ const CELEBRATIONS = [
         logo: <MehendiIcon />,
         badgeColor: "bg-emerald-500/10 text-emerald-800 border-emerald-300",
         ringColor: "ring-emerald-200/80 bg-emerald-50/70",
-        bgImage: "https://images.unsplash.com/photo-1560859251-d563a49c5e4a?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261202T043000Z/20261202T070000Z"
       },       
     ] 
@@ -934,7 +934,7 @@ const CELEBRATIONS = [
         logo: <HaldiIcon />,
         badgeColor: "bg-yellow-500/15 text-yellow-900 border-yellow-300",
         ringColor: "ring-yellow-200/80 bg-yellow-50/70",
-        bgImage: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261203T110000Z/20261203T133000Z"
       },
       {
@@ -949,7 +949,7 @@ const CELEBRATIONS = [
         logo: <SangeetIcon />,
         badgeColor: "bg-rose-500/10 text-rose-800 border-rose-300",
         ringColor: "ring-rose-200/80 bg-rose-50/70",
-        bgImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261203T140000Z/20261203T180000Z"
       }
     ]
@@ -971,7 +971,7 @@ const CELEBRATIONS = [
         logo: <CarnivalIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
-        bgImage: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261204T043000Z/20261204T073000Z"
       },      
       {
@@ -986,7 +986,7 @@ const CELEBRATIONS = [
         logo: <BaraatIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
-        bgImage: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261204T123000Z/20261204T133000Z"
       },
       {
@@ -1001,7 +1001,7 @@ const CELEBRATIONS = [
         logo: <WeddingMuhurthamIcon />,
         badgeColor: "bg-red-500/10 text-red-900 border-red-300",
         ringColor: "ring-red-200/80 bg-red-50/70",
-        bgImage: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80",
+        bgImage: "",
         calDates: "20261204T133000Z/20261204T193000Z"
       }
     ]
