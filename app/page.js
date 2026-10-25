@@ -1081,6 +1081,27 @@ export default function WeddingInvite() {
 
   const handleRSVP = async (e) => {
     e.preventDefault();
+
+    // Validate name on client
+    const cleanName = formData.name.trim();
+    const dummyNames = ['abc', 'xyz', 'test', 'asdf', 'qwerty', 'dummy', 'none', 'unknown', 'foo', 'bar'];
+    const lowerName = cleanName.toLowerCase().replace(/[^a-z]/g, '');
+    if (cleanName.length < 2 || dummyNames.includes(lowerName) || /(.)\1{2,}/i.test(cleanName)) {
+      alert('Please enter a valid and complete name.');
+      return;
+    }
+
+    // Validate phone: exactly 10 digits
+    const cleanPhone = formData.phone.trim();
+    if (!/^\d{10}$/.test(cleanPhone)) {
+      alert('Please enter a valid 10-digit mobile number (numbers only).');
+      return;
+    }
+    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+      alert('Mobile number must be a valid 10-digit number starting with 6, 7, 8, or 9.');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/rsvp', {
@@ -1088,11 +1109,11 @@ export default function WeddingInvite() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      if (response.ok) {
+      const resData = await response.json().catch(() => ({}));
+      if (response.ok && resData.success) {
         setSubmitted(true);
       } else {
-        const errorData = await response.json().catch(() => ({}));
-        alert(errorData.error || 'Failed to submit RSVP. Please try again.');
+        alert(resData.error || 'Failed to submit RSVP. Please check your inputs and try again.');
       }
     } catch (error) {
       console.error(error);
@@ -1683,21 +1704,27 @@ export default function WeddingInvite() {
                   <input
                     type="text"
                     required
+                    minLength={2}
+                    maxLength={60}
                     className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
-                    placeholder="e.g. John Doe"
+                    placeholder="e.g. Rajesh Sharma"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Phone / WhatsApp</label>
+                  <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Phone / WhatsApp (10 digits) *</label>
                   <input
                     type="tel"
+                    required
+                    inputMode="numeric"
+                    pattern="[6-9][0-9]{9}"
+                    maxLength={10}
                     className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
-                    placeholder="+91 98765 43210"
+                    placeholder="10-digit number (e.g. 9876543210)"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                   />
                 </div>
               </div>
