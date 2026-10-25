@@ -879,6 +879,7 @@ const CELEBRATIONS = [
         logo: <GaneshPujaIcon />,
         badgeColor: "bg-amber-500/10 text-amber-800 border-amber-300",
         ringColor: "ring-amber-200/80 bg-amber-50/70",
+        bgImage: "https://images.unsplash.com/photo-1609137144822-2615a1334c26?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261126T013000Z/20261126T033000Z"
       }    
     ] 
@@ -898,6 +899,7 @@ const CELEBRATIONS = [
         logo: <ChaakIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
+        bgImage: "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261202T053000Z/20261202T083000Z"
       },        
       {
@@ -910,6 +912,7 @@ const CELEBRATIONS = [
         logo: <MehendiIcon />,
         badgeColor: "bg-emerald-500/10 text-emerald-800 border-emerald-300",
         ringColor: "ring-emerald-200/80 bg-emerald-50/70",
+        bgImage: "https://images.unsplash.com/photo-1560859251-d563a49c5e4a?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261202T043000Z/20261202T070000Z"
       },       
     ] 
@@ -931,6 +934,7 @@ const CELEBRATIONS = [
         logo: <HaldiIcon />,
         badgeColor: "bg-yellow-500/15 text-yellow-900 border-yellow-300",
         ringColor: "ring-yellow-200/80 bg-yellow-50/70",
+        bgImage: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261203T110000Z/20261203T133000Z"
       },
       {
@@ -945,6 +949,7 @@ const CELEBRATIONS = [
         logo: <SangeetIcon />,
         badgeColor: "bg-rose-500/10 text-rose-800 border-rose-300",
         ringColor: "ring-rose-200/80 bg-rose-50/70",
+        bgImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261203T140000Z/20261203T180000Z"
       }
     ]
@@ -966,6 +971,7 @@ const CELEBRATIONS = [
         logo: <CarnivalIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
+        bgImage: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261204T043000Z/20261204T073000Z"
       },      
       {
@@ -980,6 +986,7 @@ const CELEBRATIONS = [
         logo: <BaraatIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
+        bgImage: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261204T123000Z/20261204T133000Z"
       },
       {
@@ -994,6 +1001,7 @@ const CELEBRATIONS = [
         logo: <WeddingMuhurthamIcon />,
         badgeColor: "bg-red-500/10 text-red-900 border-red-300",
         ringColor: "ring-red-200/80 bg-red-50/70",
+        bgImage: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261204T133000Z/20261204T193000Z"
       }
     ]
@@ -1572,11 +1580,26 @@ export default function WeddingInvite() {
                           variants={fadeInUp}
                           className="bg-[#FFFDF9] rounded-3xl p-5 sm:p-7 md:p-8 border border-amber-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all relative overflow-hidden flex flex-col justify-between group hover:border-amber-400/80"
                         >
+                          {/* EVENT BACKGROUND IMAGE & OVERLAYS */}
+                          {evt.bgImage && (
+                            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                              <img
+                                src={evt.bgImage}
+                                alt={evt.title}
+                                className="w-full h-full object-cover object-center opacity-[0.14] group-hover:opacity-[0.24] filter brightness-105 contrast-[1.05] group-hover:scale-105 transition-all duration-700"
+                                loading="lazy"
+                                decoding="async"
+                                referrerPolicy="no-referrer"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9]/90 via-[#FFFDF9]/80 to-[#FFFDF9]/95" />
+                            </div>
+                          )}
+
                           <RoyalCorner position="top-left" />
                           <RoyalCorner position="top-right" />
                           
                           {/* TOP LOGO EMBLEM */}
-                          <div className="flex flex-col items-center text-center">
+                          <div className="relative z-10 flex flex-col items-center text-center">
                             <div className={`w-20 h-20 rounded-full p-2.5 flex items-center justify-center ring-4 ${evt.ringColor} shadow-inner mb-4 transition-transform duration-300 group-hover:scale-105`}>
                               {evt.logo}
                             </div>
@@ -1612,7 +1635,7 @@ export default function WeddingInvite() {
                           </div>
 
                           {/* ATTIRE & ADD TO CALENDAR FOOTER */}
-                          <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-sans">
+                          <div className="relative z-10 pt-4 border-t border-stone-100/90 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-sans">
                             <div className="flex items-center gap-1.5 text-stone-600 text-center sm:text-left">
                               <Shirt size={14} className="text-rose-400 shrink-0" />
                               <span><strong className="text-stone-800">Attire:</strong> <em className="italic">{evt.attire}</em></span>
