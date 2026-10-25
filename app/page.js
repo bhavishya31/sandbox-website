@@ -1312,7 +1312,6 @@ export default function WeddingInvite() {
                 </div>
 
                 <p className="text-[10px] sm:text-xs tracking-[0.35em] font-sans text-stone-500 uppercase font-semibold">
-                  Royal Wedding Invitation
                 </p>
 
                 {/* COUPLE NAME & DATE */}
