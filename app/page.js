@@ -925,6 +925,8 @@ const CELEBRATIONS = [
         title: "Haldi Rasam",
         tagline: "Marigold Showers & Turmeric",
         attire: "Shades of Pink",
+        venue: "Aura Banquet Hall, Jaipur",
+        venueUrl: "https://maps.google.com/?q=Aura+Banquet+Hall+Giriraj+Nagar+Dholai+Jaipur",
         desc: "A lively ritual of auspicious turmeric paste, flower petal showers, laughter, and blessings.",
         logo: <HaldiIcon />,
         badgeColor: "bg-yellow-500/15 text-yellow-900 border-yellow-300",
@@ -937,6 +939,8 @@ const CELEBRATIONS = [
         title: "Ring Ceremony & Sangeet Night",
         tagline: "Beats, Rings & Revelry",
         attire: "Dark Shades or Shimmer",
+        venue: "Aura Banquet Hall, Jaipur",
+        venueUrl: "https://maps.google.com/?q=Aura+Banquet+Hall+Giriraj+Nagar+Dholai+Jaipur",
         desc: "An electrifying night celebrating the exchange of rings, choreographed dances, musical beats, and a dinner feast.",
         logo: <SangeetIcon />,
         badgeColor: "bg-rose-500/10 text-rose-800 border-rose-300",
@@ -956,6 +960,8 @@ const CELEBRATIONS = [
         title: "Carnival Dance",
         tagline: "Where Love Meets the Carnival Spirit",
         attire: "Rajasthani Outfit",
+        venue: "Aura Banquet Hall, Jaipur",
+        venueUrl: "https://maps.google.com/?q=Aura+Banquet+Hall+Giriraj+Nagar+Dholai+Jaipur",
         desc: "Step Into the Carnival of Love, where Every Beat Tells a Love Story.",
         logo: <CarnivalIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
@@ -968,6 +974,8 @@ const CELEBRATIONS = [
         title: "Baraat Swagat & Dhol Tasha",
         tagline: "Beats, Brass & Grand Welcome",
         attire: "Royal Elegance / Bandhgala & Vibrant Safa",
+        venue: "Aura Banquet Hall, Jaipur",
+        venueUrl: "https://maps.google.com/?q=Aura+Banquet+Hall+Giriraj+Nagar+Dholai+Jaipur",
         desc: "Joyous arrival of the groom and celebratory Baraat procession with live Punjabi dhol beats, nagada, brass brass band, and warm Milni welcome by the bride's family.",
         logo: <BaraatIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
@@ -980,6 +988,8 @@ const CELEBRATIONS = [
         title: "The Wedding Muhurtham (Baraat & Phere)",
         tagline: "The Sacred Seven Vows",
         attire: "Royal Elegance / Bandhgala & Vibrant Safa",
+        venue: "Aura Banquet Hall, Jaipur",
+        venueUrl: "https://maps.google.com/?q=Aura+Banquet+Hall+Giriraj+Nagar+Dholai+Jaipur",
         desc: "The arrival of the Baraat, exchange of Varmala, and the sacred Seven Vows around the holy fire, followed by a royal feast.",
         logo: <WeddingMuhurthamIcon />,
         badgeColor: "bg-red-500/10 text-red-900 border-red-300",
@@ -1577,9 +1587,23 @@ export default function WeddingInvite() {
 
                             <h4 className="text-xl md:text-2xl font-light text-gray-900 tracking-wide mb-2 mt-1">{evt.title}</h4>
 
-                            <div className="inline-flex items-center gap-1.5 text-stone-600 text-xs font-sans font-medium bg-stone-50 border border-stone-200 px-3 py-1 rounded-full mb-4">
-                              <Clock size={13} className="text-rose-500" />
-                              <span>{evt.time}</span>
+                            <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+                              <div className="inline-flex items-center gap-1.5 text-stone-600 text-xs font-sans font-medium bg-stone-50 border border-stone-200 px-3 py-1 rounded-full">
+                                <Clock size={13} className="text-rose-500" />
+                                <span>{evt.time}</span>
+                              </div>
+                              {evt.venue && (
+                                <a
+                                  href={evt.venueUrl || venueMapsUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-stone-700 hover:text-[#831828] text-xs font-sans font-medium bg-amber-50/80 hover:bg-amber-100/90 border border-amber-200/80 px-3 py-1 rounded-full transition-colors"
+                                  title="View venue location on Google Maps"
+                                >
+                                  <MapPin size={13} className="text-[#831828]" />
+                                  <span>{evt.venue}</span>
+                                </a>
+                              )}
                             </div>
 
                             <p className="text-gray-600 font-sans text-xs md:text-sm leading-relaxed mb-6 max-w-sm">
@@ -1593,15 +1617,29 @@ export default function WeddingInvite() {
                               <Shirt size={14} className="text-rose-400 shrink-0" />
                               <span><strong className="text-stone-800">Attire:</strong> <em className="italic">{evt.attire}</em></span>
                             </div>
-                            <a
-                              href={eventCalUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#831828] hover:text-[#58111A] bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-full transition-colors shrink-0 border border-amber-200"
-                            >
-                              <CalendarPlus size={13} />
-                              <span>Calendar</span>
-                            </a>
+                            <div className="flex items-center gap-2 shrink-0">
+                              {evt.venueUrl && (
+                                <a
+                                  href={evt.venueUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-full transition-colors border border-emerald-200"
+                                  title="Get directions to venue"
+                                >
+                                  <Navigation size={12} className="text-emerald-600" />
+                                  <span>Directions</span>
+                                </a>
+                              )}
+                              <a
+                                href={eventCalUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#831828] hover:text-[#58111A] bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-full transition-colors shrink-0 border border-amber-200"
+                              >
+                                <CalendarPlus size={13} />
+                                <span>Calendar</span>
+                              </a>
+                            </div>
                           </div>
                         </motion.div>
                       );
