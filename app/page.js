@@ -1026,8 +1026,8 @@ export default function WeddingInvite() {
     }
   };
 
-  const defaultVenueImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Jaipur%2C_India%2C_Hawa_Mahal_Palace.jpg/1280px-Jaipur%2C_India%2C_Hawa_Mahal_Palace.jpg";
-  const fallbackVenueImage = "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=2000&q=80";
+  const defaultVenueImage = "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=2000&q=80";
+  const fallbackVenueImage = "https://images.unsplash.com/photo-1600100397608-f010f443b740?auto=format&fit=crop&w=2000&q=80";
   const [venueImageSrc, setVenueImageSrc] = useState(defaultVenueImage);
 
   const handleVenueImageFallback = () => {
@@ -1620,14 +1620,14 @@ export default function WeddingInvite() {
           <img
             src={venueImageSrc}
             alt="Hawa Mahal Jaipur"
-            className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[0.95] scale-105 transition-transform duration-1000"
+            className="w-full h-full object-cover object-center opacity-35 filter brightness-[0.95] contrast-[1.05]"
             onError={handleVenueImageFallback}
             loading="lazy"
             decoding="async"
+            referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-[#FAF6EE]/85 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6EE] via-[#FAF6EE]/75 to-[#FAF6EE]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,253,249,0.65)_0%,transparent_85%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6EE] via-[#FAF6EE]/30 to-[#FAF6EE]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,253,249,0.4)_0%,transparent_80%)]" />
         </div>
 
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="relative z-10 max-w-3xl mx-auto px-6 text-center">
@@ -1691,7 +1691,7 @@ export default function WeddingInvite() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-sans">
             <a 
-              href="https://wa.me/qr/Z63M2WXI7AGOG1" 
+              href="https://chat.whatsapp.com/FmVaqeFTbJo1NcmMamFUab?s=sh&p=a&mlu=4&ilr=4" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-stone-300 bg-white px-5 py-2.5 rounded-full hover:bg-stone-50 transition-colors text-stone-700"
