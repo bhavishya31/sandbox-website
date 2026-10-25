@@ -1327,11 +1327,8 @@ export default function WeddingInvite() {
 
                 {/* HEARTFELT INVITATION MESSAGES */}
                 <div className="space-y-2 max-w-md mx-auto py-1">
-                  <p className="text-xs sm:text-sm text-stone-700 font-serif italic leading-relaxed">
-                    Together with their families, cordially invite you to celebrate the joyous union, auspicious rituals, and beginning of our forever.
-                  </p>
                   <p className="text-[11px] sm:text-xs text-stone-500 font-sans leading-relaxed">
-                    Your gracious presence, warm blessings, and love will make our special days truly unforgettable.
+                    Cordially invite you to grace the auspicious celebrations of their holy union in Jaipur.
                   </p>
                 </div>
 
@@ -1362,7 +1359,6 @@ export default function WeddingInvite() {
                         <div className="flex flex-col items-center justify-center">
                           <Heart className="w-8 h-8 fill-amber-200 text-amber-100 animate-pulse drop-shadow-md" />
                           <span className="text-[8px] font-sans font-bold tracking-widest text-amber-200 uppercase mt-0.5">
-                            SEAL
                           </span>
                         </div>
                       </div>
