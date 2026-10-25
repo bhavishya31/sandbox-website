@@ -1330,23 +1330,6 @@ export default function WeddingInvite() {
           </motion.div>
         )}
       </AnimatePresence>
-                    />
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#58111A] via-[#831828] to-amber-600 shadow-2xl flex items-center justify-center border-2 border-amber-300 text-amber-100 ring-4 ring-amber-300/40">
-                      <Heart className="w-8 h-8 fill-white/90 animate-pulse text-white drop-shadow-md" />
-                    </div>
-                  </div>
-                  <span className="mt-3 text-xs font-sans tracking-[0.25em] text-[#831828] uppercase font-bold group-hover:text-amber-700">
-                    Tap to Open
-                  </span>
-                  <span className="mt-1 text-[11px] font-sans tracking-[0.2em] text-stone-500 uppercase font-medium">
-                    Khamma Ghani • Open Invitation ❦
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* INTERACTIVE DHOL BEAT PULSE BANNER OVERLAY */}
       {dholBeatPulse && (
