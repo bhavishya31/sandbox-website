@@ -1082,6 +1082,7 @@ export default function WeddingInvite() {
   }, [weddingDate]);
 
   const handleOpenInvitation = () => {
+    if (isOpening || isInvitationOpened) return;
     setIsOpening(true);
     if (audioRef.current && !isPlaying) {
       audioRef.current.play()
@@ -1089,10 +1090,9 @@ export default function WeddingInvite() {
         .catch(() => {});
     }
 
-    // Cinematic palace gates parting duration
+    // Cinematic palace gates parting duration - keep gates parted during unmount
     setTimeout(() => {
       setIsInvitationOpened(true);
-      setIsOpening(false);
     }, 1100);
   };
 
@@ -1223,28 +1223,39 @@ export default function WeddingInvite() {
             key="royal-invitation-modal"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
+            onClick={handleOpenInvitation}
             className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/85 backdrop-blur-md overflow-hidden"
           >
             {/* CINEMATIC ROYAL PALACE GATES / DOORS (PARTING ON TAP) */}
             <motion.div
-              className="fixed top-0 left-0 bottom-0 w-1/2 bg-gradient-to-r from-[#3b080f] via-[#5c1320] to-[#741626] border-r-2 border-amber-400/80 shadow-[10px_0_40px_rgba(0,0,0,0.6)] z-40 flex items-center justify-end pointer-events-none"
+              className="fixed top-0 left-0 bottom-0 w-1/2 bg-gradient-to-r from-[#2c050a] via-[#4d0f1a] to-[#6d1423] border-r-2 border-amber-400/90 shadow-[15px_0_50px_rgba(0,0,0,0.7)] z-30 flex flex-col items-end justify-center pointer-events-none pr-4 sm:pr-8"
               initial={{ x: 0 }}
               animate={isOpening ? { x: "-100%" } : { x: 0 }}
+              exit={{ x: "-100%", opacity: 0 }}
               transition={{ duration: 1.1, ease: [0.77, 0, 0.175, 1] }}
             >
-              <div className="mr-4 opacity-25 text-amber-300 hidden sm:block">
+              <div className="opacity-25 text-amber-300 hidden sm:block">
                 <RoyalElephant className="w-24 h-24" />
+              </div>
+              <div className="h-48 w-1 border-r border-dashed border-amber-300/40 my-4 hidden sm:block" />
+              <div className="text-[10px] font-serif text-amber-300/40 tracking-[0.3em] uppercase -rotate-90 origin-right mr-2 hidden md:block">
+                शुभ विवाह
               </div>
             </motion.div>
 
             <motion.div
-              className="fixed top-0 right-0 bottom-0 w-1/2 bg-gradient-to-l from-[#3b080f] via-[#5c1320] to-[#741626] border-l-2 border-amber-400/80 shadow-[-10px_0_40px_rgba(0,0,0,0.6)] z-40 flex items-center justify-start pointer-events-none"
+              className="fixed top-0 right-0 bottom-0 w-1/2 bg-gradient-to-l from-[#2c050a] via-[#4d0f1a] to-[#6d1423] border-l-2 border-amber-400/90 shadow-[-15px_0_50px_rgba(0,0,0,0.7)] z-30 flex flex-col items-start justify-center pointer-events-none pl-4 sm:pl-8"
               initial={{ x: 0 }}
               animate={isOpening ? { x: "100%" } : { x: 0 }}
+              exit={{ x: "100%", opacity: 0 }}
               transition={{ duration: 1.1, ease: [0.77, 0, 0.175, 1] }}
             >
-              <div className="ml-4 opacity-25 text-amber-300 hidden sm:block">
+              <div className="opacity-25 text-amber-300 hidden sm:block">
                 <RoyalCamel className="w-24 h-24" />
+              </div>
+              <div className="h-48 w-1 border-l border-dashed border-amber-300/40 my-4 hidden sm:block" />
+              <div className="text-[10px] font-serif text-amber-300/40 tracking-[0.3em] uppercase rotate-90 origin-left ml-2 hidden md:block">
+                कल्याणम्
               </div>
             </motion.div>
 
@@ -1260,10 +1271,12 @@ export default function WeddingInvite() {
 
             {/* INVITATION ENVELOPE CARD */}
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 1 }}
               animate={isOpening ? { scale: 1.06, opacity: 0, filter: "blur(5px)" } : { scale: 1, opacity: 1, filter: "blur(0px)" }}
+              exit={{ scale: 1.06, opacity: 0, filter: "blur(5px)" }}
               transition={{ duration: isOpening ? 0.6 : 0.4 }}
-              className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto bg-[#fffdf9] rounded-3xl p-6 sm:p-8 md:p-12 text-center border-4 border-amber-300/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] z-30"
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-lg max-h-[94vh] overflow-y-auto bg-[#fffdf9] rounded-3xl p-6 sm:p-8 md:p-10 text-center border-4 border-amber-300/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] z-40"
             >
               <RoyalCorner position="top-left" />
               <RoyalCorner position="top-right" />
@@ -1271,58 +1284,98 @@ export default function WeddingInvite() {
               <RoyalCorner position="bottom-right" />
 
               {/* Floating Heritage Watermark Icons in Card */}
-              <div className="absolute top-4 left-6 opacity-15 text-amber-800 pointer-events-none">
+              <div className="absolute top-4 left-6 opacity-10 text-amber-800 pointer-events-none">
                 <RoyalElephant className="w-12 h-12" />
               </div>
-              <div className="absolute top-4 right-6 opacity-15 text-amber-800 pointer-events-none">
+              <div className="absolute top-4 right-6 opacity-10 text-amber-800 pointer-events-none">
                 <RoyalHorse className="w-12 h-12" />
               </div>
 
-              <div className="relative z-10 space-y-4">
-                <div className="flex justify-center pt-2">
-                  <LordGaneshaLogo className="w-14 h-14 mx-auto drop-shadow-sm" />
+              <div className="relative z-10 space-y-3 sm:space-y-4">
+                {/* AUSPICIOUS GANESHA INVOCATION */}
+                <div className="flex justify-center pt-1">
+                  <LordGaneshaLogo className="w-16 h-16 sm:w-20 sm:h-20 mx-auto drop-shadow-md" />
                 </div>
-                <span className="text-xs font-sans tracking-[0.35em] text-[#831828] uppercase font-bold block">
-                  ॥ श्री गणेशाय नमः ॥
-                </span>
+                <div className="space-y-1">
+                  <span className="text-xs sm:text-sm font-sans tracking-[0.35em] text-[#831828] uppercase font-bold block">
+                    ॥ श्री गणेशाय नमः ॥
+                  </span>
+                  <p className="text-[11px] sm:text-xs text-amber-800/80 font-serif italic max-w-sm mx-auto">
+                    वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ । निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
+                  </p>
+                </div>
 
-                <div className="w-16 h-[1.5px] bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto" />
+                <div className="flex items-center justify-center gap-2">
+                  <span className="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-500/70" />
+                  <span className="text-amber-600 text-xs">✦ ❦ ✦</span>
+                  <span className="h-[1px] w-12 bg-gradient-to-l from-transparent to-amber-500/70" />
+                </div>
 
-                <p className="text-xs tracking-[0.3em] font-sans text-stone-500 uppercase">
+                <p className="text-[10px] sm:text-xs tracking-[0.35em] font-sans text-stone-500 uppercase font-semibold">
                   Royal Wedding Invitation
                 </p>
 
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-light text-stone-900 tracking-wide">
-                  Bhavna <span className="text-[#831828] font-serif">&amp;</span> Devansh
-                </h2>
+                {/* COUPLE NAME & DATE */}
+                <div className="py-1">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-stone-900 tracking-wide font-serif">
+                    Bhavna <span className="text-[#831828] italic font-normal">&amp;</span> Devansh
+                  </h2>
+                  <p className="text-xs sm:text-sm font-sans tracking-widest text-amber-800 uppercase font-semibold mt-1">
+                    3 – 4 December 2026 • Pink City • Jaipur
+                  </p>
+                </div>
 
-                <p className="text-xs md:text-sm text-stone-600 italic font-serif">
-                  Cordially invite you to grace the auspicious celebrations of their holy union in Jaipur.
-                </p>
+                {/* HEARTFELT INVITATION MESSAGES */}
+                <div className="space-y-2 max-w-md mx-auto py-1">
+                  <p className="text-xs sm:text-sm text-stone-700 font-serif italic leading-relaxed">
+                    Together with their families, cordially invite you to celebrate the joyous union, auspicious rituals, and beginning of our forever.
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-stone-500 font-sans leading-relaxed">
+                    Your gracious presence, warm blessings, and love will make our special days truly unforgettable.
+                  </p>
+                </div>
 
-                {/* Wax Seal Button to Enter */}
-                <div className="pt-6 pb-2">
+                {/* ROYAL WAX SEAL & TAP TO OPEN BUTTON */}
+                <div className="pt-3 pb-1">
                   <button
+                    type="button"
                     onClick={handleOpenInvitation}
                     disabled={isOpening}
-                    className="group relative inline-flex flex-col items-center justify-center transition-transform hover:scale-105 active:scale-95 focus:outline-none"
+                    className="group relative inline-flex flex-col items-center justify-center transition-transform hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
+                    aria-label="Tap to open royal invitation"
                   >
-                    <div className="relative">
+                    <div className="relative flex items-center justify-center">
+                      {/* Animated Golden Pulse Rings */}
                       <motion.div 
-                        className="absolute -inset-2 rounded-full border-2 border-amber-400/40"
-                        animate={{ scale: [1, 1.18, 1], opacity: [0.3, 0.8, 0.3] }}
-                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute -inset-3 rounded-full border-2 border-amber-400/50"
+                        animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.85, 0.3] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
                       />
-                      <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#58111A] via-[#831828] to-amber-600 shadow-2xl flex items-center justify-center border-2 border-amber-300 text-amber-100 ring-4 ring-amber-300/40 group-hover:ring-amber-400/70 transition-all">
-                        <Heart className="w-8 h-8 fill-white/90 animate-pulse text-white drop-shadow-md" />
+                      <motion.div 
+                        className="absolute -inset-6 rounded-full border border-amber-300/30"
+                        animate={{ scale: [1, 1.4, 1], opacity: [0.15, 0.5, 0.15] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                      />
+
+                      {/* Ornate Red & Gold Wax Seal */}
+                      <div className="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-gradient-to-tr from-[#3f080e] via-[#6d131f] to-[#991b1b] shadow-[0_10px_25px_rgba(0,0,0,0.4)] flex items-center justify-center border-4 border-amber-300 text-amber-100 ring-4 ring-amber-400/50 group-hover:ring-amber-300 transition-all">
+                        <div className="flex flex-col items-center justify-center">
+                          <Heart className="w-8 h-8 fill-amber-200 text-amber-100 animate-pulse drop-shadow-md" />
+                          <span className="text-[8px] font-sans font-bold tracking-widest text-amber-200 uppercase mt-0.5">
+                            SEAL
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <span className="mt-3 text-xs font-sans tracking-[0.25em] text-[#831828] uppercase font-bold group-hover:text-amber-700">
-                      {isOpening ? "Opening Royal Invitation..." : "Tap to Open"}
-                    </span>
-                    <span className="mt-1 text-[11px] font-sans tracking-[0.2em] text-stone-500 uppercase font-medium">
-                      Khamma Ghani • Open Invitation ❦
-                    </span>
+
+                    <div className="mt-4 flex flex-col items-center">
+                      <span className="px-5 py-1.5 rounded-full bg-gradient-to-r from-[#831828] to-[#991b1b] text-amber-100 border border-amber-300 shadow-md text-xs sm:text-sm font-sans tracking-[0.25em] uppercase font-bold group-hover:from-[#991b1b] group-hover:to-[#b91c1c] transition-colors">
+                        {isOpening ? "Opening Royal Invitation..." : "Tap to Open"}
+                      </span>
+                      <span className="mt-1.5 text-[11px] sm:text-xs font-sans tracking-[0.2em] text-stone-500 uppercase font-medium">
+                        Khamma Ghani • Open Invitation ❦
+                      </span>
+                    </div>
                   </button>
                 </div>
               </div>
