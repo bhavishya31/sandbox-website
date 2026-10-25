@@ -51,6 +51,72 @@ async function saveRSVPList(list) {
   return false;
 }
 
+function validateName(rawName) {
+  const name = (rawName || '').trim();
+  if (!name || name.length < 2 || name.length > 60) {
+    return { valid: false, error: 'Name must be between 2 and 60 characters.' };
+  }
+
+  // Allowed characters: Latin alphabets, Devanagari script, spaces, dots, hyphens, apostrophes
+  const validCharRegex = /^[a-zA-Z\u0900-\u097F\s.'-]+$/;
+  if (!validCharRegex.test(name)) {
+    return { valid: false, error: 'Name must contain only valid letters and spaces.' };
+  }
+
+  const lettersOnly = name.replace(/[^a-zA-Z\u0900-\u097F]/g, '');
+  if (lettersOnly.length < 2) {
+    return { valid: false, error: 'Name must contain at least 2 valid letters.' };
+  }
+
+  // Block 3 or more consecutive identical characters (e.g. "aaa", "zzzz")
+  if (/(.)\1{2,}/i.test(name)) {
+    return { valid: false, error: 'Please enter a genuine name without repeated characters.' };
+  }
+
+  // Check all letters identical (e.g. "aaaa", "bb")
+  const uniqueChars = new Set(lettersOnly.toLowerCase());
+  if (uniqueChars.size < 2 && lettersOnly.length >= 2) {
+    return { valid: false, error: 'Please enter a valid, complete name.' };
+  }
+
+  const lower = name.toLowerCase().replace(/[^a-z]/g, '');
+  const dummyNames = [
+    'abc', 'xyz', 'test', 'tester', 'testing', 'asdf', 'qwerty', 'dummy',
+    'sample', 'fake', 'admin', 'user', 'guest', 'none', 'unknown', 'null',
+    'temp', 'random', 'foo', 'bar', 'baz', 'demo', 'check', 'noone', 'someone',
+    'abcdef', 'zxcv', 'qwer'
+  ];
+  if (dummyNames.includes(lower)) {
+    return { valid: false, error: 'Please enter your actual name.' };
+  }
+
+  // Ensure Latin names contain recognized vowels
+  if (/^[a-zA-Z\s.'-]+$/.test(name) && !/[aeiouyAEIOUY]/.test(name)) {
+    return { valid: false, error: 'Name must contain recognizable vowels.' };
+  }
+
+  // Check repeated 2-letter patterns (e.g. "ababab", "xyxyxy")
+  if (lower.length >= 4 && /^([a-z]{2})\1+$/.test(lower)) {
+    return { valid: false, error: 'Please enter a valid name.' };
+  }
+
+  return { valid: true, cleanName: name };
+}
+
+function validatePhone(rawPhone) {
+  const cleanPhone = (rawPhone || '').toString().trim();
+  if (!/^\d{10}$/.test(cleanPhone)) {
+    return { valid: false, error: 'Contact number must be exactly 10 digits (numbers only).' };
+  }
+  if (!/^[6-9]\d{9}$/.test(cleanPhone) || /^(\d)\1{9}$/.test(cleanPhone)) {
+    return { valid: false, error: 'Please enter a valid 10-digit mobile number.' };
+  }
+  if (['1234567890', '0123456789', '9876543210', '0987654321'].includes(cleanPhone)) {
+    return { valid: false, error: 'Sequential test numbers are not allowed.' };
+  }
+  return { valid: true, cleanPhone };
+}
+
 export async function GET() {
   try {
     const rsvps = await getStoredRSVPs();
@@ -74,72 +140,63 @@ export async function POST(request) {
 
     const { name, phone, status, guests, attendingEvents, message } = body;
 
-    const cleanName = (name || '').trim();
-    const cleanPhone = (phone || '').trim();
-
-    if (!cleanName || cleanName.length < 2) {
-      return NextResponse.json({ success: false, error: 'Name must be at least 2 characters.' }, { status: 400 });
-    }
-    if (cleanName.length > 80) {
-      return NextResponse.json({ success: false, error: 'Name cannot exceed 80 characters.' }, { status: 400 });
-    }
-    if (!/[a-zA-Z\u0900-\u097F]/.test(cleanName)) {
-      return NextResponse.json({ success: false, error: 'Name must contain valid letters.' }, { status: 400 });
+    const nameValidation = validateName(name);
+    if (!nameValidation.valid) {
+      return NextResponse.json({ success: false, error: nameValidation.error }, { status: 400 });
     }
 
-    const normalizedPhone = cleanPhone.replace(/\D/g, '');
-    if (!cleanPhone || normalizedPhone.length < 10 || normalizedPhone.length > 15) {
-      return NextResponse.json({ success: false, error: 'A valid 10 to 15 digit phone number is required.' }, { status: 400 });
+    const phoneValidation = validatePhone(phone);
+    if (!phoneValidation.valid) {
+      return NextResponse.json({ success: false, error: phoneValidation.error }, { status: 400 });
     }
 
     const validStatus = status === 'declining' ? 'declining' : 'attending';
     const validGuests = validStatus === 'attending' ? Math.min(Math.max(Number(guests) || 1, 1), 6) : 0;
-    const cleanMessage = (message || '').trim().slice(0, 500);
+    const cleanMessage = (message || '').toString().trim().slice(0, 500);
+    const cleanEvents = Array.isArray(attendingEvents) && attendingEvents.length > 0 ? attendingEvents : ['all'];
+    const cleanName = nameValidation.cleanName;
+    const cleanPhone = phoneValidation.cleanPhone;
 
     const currentList = await getStoredRSVPs();
-    const normalizedName = cleanName.toLowerCase();
 
-    // Find existing entry by matching name and phone
-    const existingIndex = currentList.findIndex((item) => {
-      const itemNormName = (item.name || '').trim().toLowerCase();
-      const itemNormPhone = (item.phone || '').replace(/\D/g, '');
+    // Check for exact identical duplicate where all values are the same
+    const areEventsEqual = (a, b) => {
+      const arrA = Array.isArray(a) ? [...a].sort() : [];
+      const arrB = Array.isArray(b) ? [...b].sort() : [];
+      return JSON.stringify(arrA) === JSON.stringify(arrB);
+    };
 
-      if (normalizedPhone && itemNormPhone) {
-        return itemNormPhone === normalizedPhone || itemNormName === normalizedName;
-      }
-      return itemNormName === normalizedName;
+    const exactDuplicate = currentList.find((item) => {
+      const sameName = (item.name || '').trim().toLowerCase() === cleanName.toLowerCase();
+      const samePhone = (item.phone || '').toString().trim() === cleanPhone;
+      const sameStatus = (item.status || 'attending') === validStatus;
+      const sameGuests = Number(item.guests || 0) === Number(validGuests);
+      const sameEvents = areEventsEqual(item.attendingEvents, cleanEvents);
+      const sameMessage = (item.message || '').trim().toLowerCase() === cleanMessage.toLowerCase();
+      return sameName && samePhone && sameStatus && sameGuests && sameEvents && sameMessage;
     });
 
-    let savedEntry;
-    const isUpdate = existingIndex !== -1;
-
-    if (isUpdate) {
-      // Overwrite existing entry in place
-      savedEntry = {
-        ...currentList[existingIndex],
-        name: cleanName,
-        phone: cleanPhone,
-        status: validStatus,
-        guests: validGuests,
-        attendingEvents: attendingEvents || ['all'],
-        message: cleanMessage,
-        updatedAt: new Date().toISOString(),
-      };
-      currentList[existingIndex] = savedEntry;
-    } else {
-      // Create new entry
-      savedEntry = {
-        id: Date.now().toString(36) + Math.random().toString(36).substring(2, 7),
-        name: cleanName,
-        phone: cleanPhone,
-        status: validStatus,
-        guests: validGuests,
-        attendingEvents: attendingEvents || ['all'],
-        message: cleanMessage,
-        createdAt: new Date().toISOString(),
-      };
-      currentList.push(savedEntry);
+    if (exactDuplicate) {
+      return NextResponse.json({
+        success: true,
+        duplicate: true,
+        message: 'An identical RSVP entry already exists. No duplicate created.',
+        data: exactDuplicate,
+      }, { status: 200 });
     }
+
+    // Any different value creates a new valid entry without overwriting previous data
+    const savedEntry = {
+      id: Date.now().toString(36) + Math.random().toString(36).substring(2, 7),
+      name: cleanName,
+      phone: cleanPhone,
+      status: validStatus,
+      guests: validGuests,
+      attendingEvents: cleanEvents,
+      message: cleanMessage,
+      createdAt: new Date().toISOString(),
+    };
+    currentList.push(savedEntry);
 
     await saveRSVPList(currentList);
 
@@ -150,7 +207,7 @@ export async function POST(request) {
         const sheetRes = await fetch(googleSheetUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: isUpdate ? 'update' : 'create', ...savedEntry }),
+          body: JSON.stringify({ action: 'create', ...savedEntry }),
           redirect: 'follow',
         });
         const sheetResponseText = await sheetRes.text();
@@ -162,7 +219,7 @@ export async function POST(request) {
       console.warn('RSVP saved, but GOOGLE_SHEET_URL is not set or invalid:', googleSheetUrl);
     }
 
-    return NextResponse.json({ success: true, updated: isUpdate, data: savedEntry }, { status: isUpdate ? 200 : 201 });
+    return NextResponse.json({ success: true, data: savedEntry }, { status: 201 });
   } catch (error) {
     console.error('RSVP submission error:', error);
     return NextResponse.json({ success: false, error: error.message || 'Internal Server Error' }, { status: 500 });
