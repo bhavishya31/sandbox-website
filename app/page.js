@@ -19,12 +19,134 @@ import {
   QrCode,
   Flame,
   Music,
-  PartyPopper
+  PartyPopper,
+  AlertCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MEHENDI_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
 const HALDI_ANGLES = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+
+/* AUTO-DETECT & VALIDATE NON-EXISTENT OR DUMMY NAMES */
+const validateName = (rawName) => {
+  const name = (rawName || '').trim();
+  if (!name) {
+    return { valid: false, error: 'Full name is required.' };
+  }
+  if (name.length < 2) {
+    return { valid: false, error: 'Name must be at least 2 characters long.' };
+  }
+  if (name.length > 60) {
+    return { valid: false, error: 'Name cannot exceed 60 characters.' };
+  }
+
+  // Allowed characters: Latin alphabets, Devanagari script, spaces, dots, hyphens, apostrophes
+  const validCharRegex = /^[a-zA-Z\u0900-\u097F\s.'-]+$/;
+  if (!validCharRegex.test(name)) {
+    return { valid: false, error: 'Name can only contain alphabetic letters and spaces.' };
+  }
+
+  const lettersOnly = name.replace(/[^a-zA-Z\u0900-\u097F]/g, '');
+  if (lettersOnly.length < 2) {
+    return { valid: false, error: 'Name must contain at least 2 letters.' };
+  }
+
+  // Block 3 or more consecutive identical characters (e.g. "aaa", "zzzz")
+  if (/(.)\1{2,}/i.test(name)) {
+    return { valid: false, error: 'Name contains invalid repeated characters.' };
+  }
+
+  // Check unique letters (at least 2 distinct letters required)
+  const uniqueChars = new Set(lettersOnly.toLowerCase().split(''));
+  if (uniqueChars.size < 2) {
+    return { valid: false, error: 'Please enter a genuine, complete name.' };
+  }
+
+  const lower = lettersOnly.toLowerCase();
+  const dummyWords = [
+    'abc', 'xyz', 'test', 'tester', 'testing', 'asdf', 'qwerty', 'dummy',
+    'sample', 'fake', 'admin', 'user', 'guest', 'none', 'unknown', 'null',
+    'temp', 'random', 'foo', 'bar', 'baz', 'demo', 'check', 'noone', 'someone',
+    'nobody', 'nothing', 'noname', 'anon', 'anonymous', 'trial', 'abcdef',
+    'zxcv', 'qwer', 'asdfgh', 'hjkl', 'qwertyuiop', 'zxcvbnm', 'keyboard'
+  ];
+
+  // Check words inside the name
+  const words = name.toLowerCase().split(/\s+/);
+  for (const word of words) {
+    const cleanWord = word.replace(/[^a-z]/g, '');
+    if (dummyWords.includes(cleanWord)) {
+      return { valid: false, error: `"${word}" appears to be a placeholder or test name.` };
+    }
+  }
+
+  if (dummyWords.includes(lower)) {
+    return { valid: false, error: 'Please enter your actual name.' };
+  }
+
+  // Repetitive syllable mash (e.g., "ababab", "xyzxyz")
+  if (lower.length >= 4 && /^([a-z]{2,3})\1+$/.test(lower)) {
+    return { valid: false, error: 'Name appears to be repetitive characters.' };
+  }
+
+  // Keyboard row mash detection
+  const keyboardSequences = ['qwerty', 'asdfgh', 'zxcvbn', 'poiuyt', 'lkjhgf', 'mnbvcx'];
+  for (const seq of keyboardSequences) {
+    if (lower.includes(seq)) {
+      return { valid: false, error: 'Name contains keyboard pattern mash.' };
+    }
+  }
+
+  // For Latin alphabet names, ensure vowel presence & block unnatural consonant clusters
+  if (/^[a-zA-Z\s.'-]+$/.test(name)) {
+    if (!/[aeiouyAEIOUY]/.test(lettersOnly)) {
+      return { valid: false, error: 'Name must contain recognizable vowels.' };
+    }
+    if (/[bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ]{5,}/.test(name)) {
+      return { valid: false, error: 'Name contains an unnatural sequence of consonants.' };
+    }
+  }
+
+  return { valid: true, cleanName: name };
+};
+
+/* AUTO-DETECT & VALIDATE NON-EXISTENT OR DUMMY PHONE NUMBERS */
+const validatePhone = (rawPhone) => {
+  const cleanPhone = (rawPhone || '').toString().trim().replace(/\D/g, '');
+  if (!cleanPhone) {
+    return { valid: false, error: '10-digit mobile number is required.' };
+  }
+  if (cleanPhone.length !== 10) {
+    return { valid: false, error: 'Mobile number must be exactly 10 digits.' };
+  }
+  if (!/^[6-9]/.test(cleanPhone)) {
+    return { valid: false, error: 'Mobile number must start with 6, 7, 8, or 9.' };
+  }
+  if (/^(\d)\1{9}$/.test(cleanPhone)) {
+    return { valid: false, error: 'Repeated identical numbers are invalid.' };
+  }
+
+  // Require at least 3 distinct digits
+  const uniqueDigits = new Set(cleanPhone.split(''));
+  if (uniqueDigits.size < 3) {
+    return { valid: false, error: 'Phone number appears to be a dummy pattern.' };
+  }
+
+  const sequentialDummies = [
+    '0123456789', '1234567890', '2345678901',
+    '9876543210', '8765432109', '7654321098',
+    '9876543211', '0987654321', '9123456789',
+    '9876501234', '6789012345'
+  ];
+  if (sequentialDummies.includes(cleanPhone)) {
+    return { valid: false, error: 'Sequential test numbers are not permitted.' };
+  }
+  if (/^(\d{2})\1{4}$/.test(cleanPhone)) {
+    return { valid: false, error: 'Repeating pair numbers are not allowed.' };
+  }
+
+  return { valid: true, cleanPhone };
+};
 
 /* CELEBRATORY FLOATING PETALS / CONFETTI */
 const PETAL_PRESETS = [
@@ -879,7 +1001,7 @@ const CELEBRATIONS = [
         logo: <GaneshPujaIcon />,
         badgeColor: "bg-amber-500/10 text-amber-800 border-amber-300",
         ringColor: "ring-amber-200/80 bg-amber-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1567591370504-208b8b0e8c89?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261126T013000Z/20261126T033000Z"
       }    
     ] 
@@ -899,7 +1021,7 @@ const CELEBRATIONS = [
         logo: <ChaakIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261202T053000Z/20261202T083000Z"
       },        
       {
@@ -912,7 +1034,7 @@ const CELEBRATIONS = [
         logo: <MehendiIcon />,
         badgeColor: "bg-emerald-500/10 text-emerald-800 border-emerald-300",
         ringColor: "ring-emerald-200/80 bg-emerald-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1560859251-d563a49c5e4a?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261202T043000Z/20261202T070000Z"
       },       
     ] 
@@ -934,7 +1056,7 @@ const CELEBRATIONS = [
         logo: <HaldiIcon />,
         badgeColor: "bg-yellow-500/15 text-yellow-900 border-yellow-300",
         ringColor: "ring-yellow-200/80 bg-yellow-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261203T110000Z/20261203T133000Z"
       },
       {
@@ -949,7 +1071,7 @@ const CELEBRATIONS = [
         logo: <SangeetIcon />,
         badgeColor: "bg-rose-500/10 text-rose-800 border-rose-300",
         ringColor: "ring-rose-200/80 bg-rose-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261203T140000Z/20261203T180000Z"
       }
     ]
@@ -971,7 +1093,7 @@ const CELEBRATIONS = [
         logo: <CarnivalIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261204T043000Z/20261204T073000Z"
       },      
       {
@@ -986,7 +1108,7 @@ const CELEBRATIONS = [
         logo: <BaraatIcon />,
         badgeColor: "bg-orange-500/10 text-orange-900 border-orange-300",
         ringColor: "ring-orange-200/80 bg-orange-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261204T123000Z/20261204T133000Z"
       },
       {
@@ -1001,7 +1123,7 @@ const CELEBRATIONS = [
         logo: <WeddingMuhurthamIcon />,
         badgeColor: "bg-red-500/10 text-red-900 border-red-300",
         ringColor: "ring-red-200/80 bg-red-50/70",
-        bgImage: "",
+        bgImage: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80",
         calDates: "20261204T133000Z/20261204T193000Z"
       }
     ]
@@ -1117,32 +1239,32 @@ export default function WeddingInvite() {
   const handleRSVP = async (e) => {
     e.preventDefault();
 
-    // Validate name on client
-    const cleanName = formData.name.trim();
-    const dummyNames = ['abc', 'xyz', 'test', 'asdf', 'qwerty', 'dummy', 'none', 'unknown', 'foo', 'bar'];
-    const lowerName = cleanName.toLowerCase().replace(/[^a-z]/g, '');
-    if (cleanName.length < 2 || dummyNames.includes(lowerName) || /(.)\1{2,}/i.test(cleanName)) {
-      alert('Please enter a valid and complete name.');
+    // Auto-detect and validate non-existent / fake name
+    const nameCheck = validateName(formData.name);
+    if (!nameCheck.valid) {
+      alert(nameCheck.error);
       return;
     }
 
-    // Validate phone: exactly 10 digits
-    const cleanPhone = formData.phone.trim();
-    if (!/^\d{10}$/.test(cleanPhone)) {
-      alert('Please enter a valid 10-digit mobile number (numbers only).');
+    // Auto-detect and validate non-existent / fake phone number
+    const phoneCheck = validatePhone(formData.phone);
+    if (!phoneCheck.valid) {
+      alert(phoneCheck.error);
       return;
     }
-    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
-      alert('Mobile number must be a valid 10-digit number starting with 6, 7, 8, or 9.');
-      return;
-    }
+
+    const payload = {
+      ...formData,
+      name: nameCheck.cleanName,
+      phone: phoneCheck.cleanPhone
+    };
 
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/rsvp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
       const resData = await response.json().catch(() => ({}));
       if (response.ok && resData.success) {
@@ -1892,6 +2014,10 @@ export default function WeddingInvite() {
             </div>
           ) : (
             <form onSubmit={handleRSVP} className="space-y-6 text-left font-sans text-sm">
+              {(() => {
+                const nameCheck = formData.name.trim().length >= 2 ? validateName(formData.name) : null;
+                const phoneCheck = formData.phone.length === 10 ? validatePhone(formData.phone) : null;
+                return (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-700 font-medium mb-1.5 text-xs uppercase tracking-wider">Your Full Name *</label>
@@ -1900,11 +2026,23 @@ export default function WeddingInvite() {
                     required
                     minLength={2}
                     maxLength={60}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
+                        className={`w-full bg-stone-50 border ${nameCheck && !nameCheck.valid ? 'border-rose-400 focus:border-rose-500' : 'border-stone-200 focus:border-rose-400'} rounded-xl px-4 py-3 focus:outline-none focus:bg-white transition-colors`}
                     placeholder="e.g. Rajesh Sharma"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
+                      {nameCheck && !nameCheck.valid && (
+                        <p className="mt-1 text-[11px] text-rose-600 font-sans flex items-center gap-1">
+                          <AlertCircle size={12} className="shrink-0" />
+                          <span>{nameCheck.error}</span>
+                        </p>
+                      )}
+                      {nameCheck && nameCheck.valid && (
+                        <p className="mt-1 text-[11px] text-emerald-600 font-sans flex items-center gap-1 font-medium">
+                          <CheckCircle2 size={12} className="shrink-0" />
+                          <span>Valid Name</span>
+                        </p>
+                      )}
                 </div>
 
                 <div>
@@ -1915,13 +2053,27 @@ export default function WeddingInvite() {
                     inputMode="numeric"
                     pattern="[6-9][0-9]{9}"
                     maxLength={10}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-400 focus:bg-white transition-colors"
+                        className={`w-full bg-stone-50 border ${phoneCheck && !phoneCheck.valid ? 'border-rose-400 focus:border-rose-500' : 'border-stone-200 focus:border-rose-400'} rounded-xl px-4 py-3 focus:outline-none focus:bg-white transition-colors`}
                     placeholder="10-digit number (e.g. 9876543210)"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                   />
+                      {phoneCheck && !phoneCheck.valid && (
+                        <p className="mt-1 text-[11px] text-rose-600 font-sans flex items-center gap-1">
+                          <AlertCircle size={12} className="shrink-0" />
+                          <span>{phoneCheck.error}</span>
+                        </p>
+                      )}
+                      {phoneCheck && phoneCheck.valid && (
+                        <p className="mt-1 text-[11px] text-emerald-600 font-sans flex items-center gap-1 font-medium">
+                          <CheckCircle2 size={12} className="shrink-0" />
+                          <span>Valid Mobile Number</span>
+                        </p>
+                      )}
                 </div>
               </div>
+                );
+              })()}
 
               <div>
                 <label className="block text-gray-700 font-medium mb-2 text-xs uppercase tracking-wider">Will you join our celebrations? *</label>
