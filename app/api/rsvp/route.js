@@ -84,19 +84,41 @@ function validateName(rawName) {
     'abc', 'xyz', 'test', 'tester', 'testing', 'asdf', 'qwerty', 'dummy',
     'sample', 'fake', 'admin', 'user', 'guest', 'none', 'unknown', 'null',
     'temp', 'random', 'foo', 'bar', 'baz', 'demo', 'check', 'noone', 'someone',
-    'abcdef', 'zxcv', 'qwer'
+    'nobody', 'nothing', 'noname', 'anon', 'anonymous', 'trial', 'abcdef',
+    'zxcv', 'qwer', 'asdfgh', 'hjkl', 'qwertyuiop', 'zxcvbnm', 'keyboard'
   ];
+
+  // Check individual words
+  const words = name.toLowerCase().split(/\s+/);
+  for (const word of words) {
+    const cleanWord = word.replace(/[^a-z]/g, '');
+    if (dummyNames.includes(cleanWord)) {
+      return { valid: false, error: `"${word}" appears to be a test/dummy name.` };
+    }
+  }
+
   if (dummyNames.includes(lower)) {
     return { valid: false, error: 'Please enter your actual name.' };
+  }
+
+  // Check keyboard pattern sequences
+  const keyboardSequences = ['qwerty', 'asdfgh', 'zxcvbn', 'poiuyt', 'lkjhgf', 'mnbvcx'];
+  for (const seq of keyboardSequences) {
+    if (lower.includes(seq)) {
+      return { valid: false, error: 'Name contains keyboard pattern mash.' };
+    }
   }
 
   // Ensure Latin names contain recognized vowels
   if (/^[a-zA-Z\s.'-]+$/.test(name) && !/[aeiouyAEIOUY]/.test(name)) {
     return { valid: false, error: 'Name must contain recognizable vowels.' };
   }
+  if (/[bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ]{5,}/.test(name)) {
+    return { valid: false, error: 'Name contains an unnatural sequence of consonants.' };
+  }
 
   // Check repeated 2-letter patterns (e.g. "ababab", "xyxyxy")
-  if (lower.length >= 4 && /^([a-z]{2})\1+$/.test(lower)) {
+  if (lower.length >= 4 && /^([a-z]{2,3})\1+$/.test(lower)) {
     return { valid: false, error: 'Please enter a valid name.' };
   }
 
@@ -104,16 +126,33 @@ function validateName(rawName) {
 }
 
 function validatePhone(rawPhone) {
-  const cleanPhone = (rawPhone || '').toString().trim();
+  const cleanPhone = (rawPhone || '').toString().trim().replace(/\D/g, '');
   if (!/^\d{10}$/.test(cleanPhone)) {
     return { valid: false, error: 'Contact number must be exactly 10 digits (numbers only).' };
   }
   if (!/^[6-9]\d{9}$/.test(cleanPhone) || /^(\d)\1{9}$/.test(cleanPhone)) {
     return { valid: false, error: 'Please enter a valid 10-digit mobile number.' };
   }
-  if (['1234567890', '0123456789', '9876543210', '0987654321'].includes(cleanPhone)) {
+
+  // Real numbers require at least 3 distinct digits
+  const uniqueDigits = new Set(cleanPhone.split(''));
+  if (uniqueDigits.size < 3) {
+    return { valid: false, error: 'Phone number appears to be a dummy pattern.' };
+  }
+
+  const sequentialDummies = [
+    '0123456789', '1234567890', '2345678901',
+    '9876543210', '8765432109', '7654321098',
+    '9876543211', '0987654321', '9123456789',
+    '9876501234', '6789012345'
+  ];
+  if (sequentialDummies.includes(cleanPhone)) {
     return { valid: false, error: 'Sequential test numbers are not allowed.' };
   }
+  if (/^(\d{2})\1{4}$/.test(cleanPhone)) {
+    return { valid: false, error: 'Repeating pair numbers are not allowed.' };
+  }
+
   return { valid: true, cleanPhone };
 }
 
